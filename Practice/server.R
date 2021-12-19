@@ -84,7 +84,7 @@ server <- function(input, output) {
         geom_point(shape=21, color="black", fill="#69b3a2", size=6)+
         theme_ipsum(axis_title_size=15) 
     }
-    }, height = tam )
+    })
   })
   
   observe({
