@@ -31,7 +31,25 @@ ui <- fluidPage(
                         ),
                       fluid = TRUE) 
                       
+             ),
+             tabPanel("Are the geographic areas with more/less malnutrition?",
+                      sidebarLayout(
+                        sidebarPanel(
+                          
+                          
+                          selectInput("MalnutritionType2", "Malnutrition type",
+                                      choices = listTypeMal
+                          )
+                          
+                          
+                        ),
+                        mainPanel(
+                          plotOutput("mapplot")
+                        ),
+                        fluid = TRUE) 
+                      
              )
+             
   )
   
 )

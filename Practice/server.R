@@ -3,6 +3,7 @@ library(ggplot2)
 library(hrbrthemes)
 library(gridExtra)
 
+
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
@@ -15,6 +16,10 @@ server <- function(input, output) {
   })
   malnut <- reactive({
     input$MalnutritionType
+  })
+  
+  malnut2 <- reactive({
+    input$MalnutritionType2
   })
 
   compare<-reactive({
@@ -54,6 +59,7 @@ server <- function(input, output) {
     
       if (compare())
       {
+
         country1Plot <-ggplot(dataCountryMalnut, aes(x=xx, y=yy)) +
           geom_line(color="blue") +
           xlab('Year')+
@@ -70,6 +76,7 @@ server <- function(input, output) {
         
     }
     else{
+
       ggplot(dataCountryMalnut, aes(x=xx, y=yy)) +
         geom_line(color="blue") +
         xlab('Year')+
@@ -77,7 +84,61 @@ server <- function(input, output) {
         geom_point(shape=21, color="black", fill="#69b3a2", size=6)+
         theme_ipsum(axis_title_size=15) 
     }
-    })
+    }, height = tam )
+  })
+  
+  observe({
+  output$mapplot <- renderPlot({
+
+    misdatos = datos1
+    MalnutritionData = misdatos[,c("region", malnut2())]
+      
+    mapdata <-map_data("world")
+    mapdata <- left_join(mapdata, MalnutritionData, by = "region")
+    
+    mapdata2 <- fillVoids(malnut2(), mapdata)
+
+    if(malnut2() == "Severe.Wasting"){
+      
+      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
+        geom_polygon(aes(fill =Severe.Wasting ), color = "black")
+      color = "red"
+    }else if(malnut2() == "Wasting"){
+      
+      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
+        geom_polygon(aes(fill =Wasting ), color = "black")
+      color = "blue"
+    }else if(malnut2() == "Overweight"){
+      
+      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
+        geom_polygon(aes(fill =Overweight ), color = "black")
+      color = "green"
+    }else if(malnut2() == "Stunting"){
+      
+      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
+        geom_polygon(aes(fill =Stunting ), color = "black")
+      color = "pink"
+    }else if (malnut2() == "Underweight"){
+      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
+        geom_polygon(aes(fill =Underweight ), color = "black")
+      color = "purple"
+    }
+
+    
+    map1 <- map1 + scale_fill_gradient(name = paste("Percentaje of ", malnut2()), low = "grey50", high = color) + 
+      theme(axis.text.x = element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks = element_blank(),
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            panel.background = element_blank(),
+            panel.border = element_rect(colour = "black", fill=NA, size=1))
+    map1
+    
+      })
+  
 
   })
 }
