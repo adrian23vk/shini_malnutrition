@@ -84,7 +84,7 @@ server <- function(input, output) {
         geom_point(shape=21, color="black", fill="#69b3a2", size=6)+
         theme_ipsum(axis_title_size=15) 
     }
-    }, height = tam )
+    })
   })
   
   observe({
@@ -117,7 +117,7 @@ server <- function(input, output) {
       
       map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
         geom_polygon(aes(fill =Stunting ), color = "black")
-      color = "pink"
+      color = "deeppink"
     }else if (malnut2() == "Underweight"){
       map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
         geom_polygon(aes(fill =Underweight ), color = "black")
