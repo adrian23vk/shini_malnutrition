@@ -32,7 +32,7 @@ ui <- fluidPage(
                       fluid = TRUE) 
                       
              ),
-             tabPanel("Geographical areas with the highest malnutrition rates",
+             tabPanel("Geographical distribution of malnutrition",
                       sidebarLayout(
                         sidebarPanel(
                           

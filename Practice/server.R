@@ -2,6 +2,7 @@ library(shiny)
 library(ggplot2)
 library(hrbrthemes)
 library(gridExtra)
+library(scales)
 
 
 # Define server logic required to draw a histogram
@@ -125,7 +126,7 @@ server <- function(input, output) {
     }
 
     
-    map1 <- map1 + scale_fill_gradient(name = paste("Percentaje of ", malnut2()), low = "grey50", high = color) + 
+    map1 <- map1 + scale_fill_gradient2(name = paste("Percentaje of ", malnut2()), low = muted("gold"), high = muted("firebrick3")) + 
       theme(axis.text.x = element_blank(),
             axis.text.y = element_blank(),
             axis.ticks = element_blank(),
