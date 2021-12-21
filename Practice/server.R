@@ -7,7 +7,7 @@ library(scales)
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
-  
+  tam = 0
   shinyjs::hide(id = "Country2")
   country <- reactive({
     input$Country
@@ -45,10 +45,9 @@ server <- function(input, output) {
     xx    <- dataCountryMalnut[,1]
     yy <- dataCountryMalnut[,2]
     if (compare()){
-      print('nuevos datos')
       dataCountryMalnut2=getCountryTimeLine( country2(),malnut())
-      xx2    <- dataCountryMalnut2[,1]
-      yy2 <- dataCountryMalnut2[,2]
+      xx    <- dataCountryMalnut2[,1]
+      yy <- dataCountryMalnut2[,2]
     }
 
     
@@ -60,29 +59,27 @@ server <- function(input, output) {
     
       if (compare())
       {
-
-        country1Plot <-ggplot(dataCountryMalnut, aes(x=xx, y=yy)) +
-          geom_line(color="blue") +
+        dataCountryMalnut$Country = country()
+        dataCountryMalnut2$Country = country2()
+        dataPlot = merge(dataCountryMalnut,dataCountryMalnut2, no.dups = FALSE,all = TRUE )
+        yyy =dataPlot[,2]
+        country1Plot <-ggplot(dataPlot, aes(x=Year, y=yyy)) +
+          geom_line(aes(colour=Country)) +
           xlab('Year')+
           ylab(malnut()) +
-          geom_point(shape=21, color="black", fill="#69b3a2", size=6)+
+          geom_point(aes( color=Country),size =6)+
           theme_ipsum(axis_title_size=15) 
-        country2Plot <-ggplot(dataCountryMalnut2, aes(x=xx2, y=yy2)) +
-          geom_line(color="red") +
-          xlab('Year')+
-          ylab(malnut()) +
-          geom_point(shape=21, color="black", fill="#69b3a2", size=6)+
-          theme_ipsum(axis_title_size=15) 
-        grid.arrange(country1Plot,country2Plot,nrow=2)
+        country1Plot
         
     }
     else{
-
+      dataCountryMalnut$Country = country()
+      
       ggplot(dataCountryMalnut, aes(x=xx, y=yy)) +
-        geom_line(color="blue") +
+        geom_line(aes(colour=Country)) +
         xlab('Year')+
         ylab(malnut()) +
-        geom_point(shape=21, color="black", fill="#69b3a2", size=6)+
+        geom_point(aes( color=Country),size=6)+
         theme_ipsum(axis_title_size=15) 
     }
     })

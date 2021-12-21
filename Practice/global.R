@@ -80,3 +80,15 @@ fillVoids <-function(malf, mapdataGlobal)
   }
   return(mapdataGlobal) 
 }
+
+
+
+#grafo 3  deads by income
+#data of an income
+
+getDataIncome<- function(income)
+{
+  dataIncome<-data2[,"Income.Clasification"==income]
+  dataIncome<-dataIncome[,c("Country","U5 Population ('000s)")]
+}
+
