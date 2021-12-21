@@ -114,7 +114,7 @@ server <- function(input, output) {
       
       map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
         geom_polygon(aes(fill =Stunting ), color = "black")
-      color = "pink"
+      color = "deeppink"
     }else if (malnut2() == "Underweight"){
       map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
         geom_polygon(aes(fill =Underweight ), color = "black")
