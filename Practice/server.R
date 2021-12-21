@@ -67,7 +67,7 @@ server <- function(input, output) {
           xlab('Year')+
           ylab(malnut()) +
           geom_point(aes( color=Country),size =6)+
-          theme_ipsum(axis_title_size=15) 
+          theme_minimal(base_size = 20)
         country1Plot
         
     }
@@ -79,7 +79,7 @@ server <- function(input, output) {
         xlab('Year')+
         ylab(malnut()) +
         geom_point(aes( color=Country),size=6)+
-        theme_ipsum(axis_title_size=15) 
+        theme_minimal(base_size = 20)
     }
     })
   })
