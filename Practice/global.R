@@ -7,6 +7,7 @@ loadfonts(device = "win")
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
 data2 <- read.csv("country-wise-average.csv")
+datos1 = data2
 data1[is.na(data1)] = 0
 
 listCountry <-data2["Country"]
@@ -20,47 +21,41 @@ getCountryTimeLine <-function(nameOfCountry,typeMalnut)
 }
 #2 PLOT
 
-datos1  = read.csv("country-wise-average.csv", sep = ",")
-datos1$region = tolower(datos1$Country)
-datos1$region = unlist(lapply(datos1$region, FUN=toTitleCase))
-datos1$region[datos1$region == "Bolivia (Plurinational State of)"] <- "Bolivia"
-datos1$region[datos1$region == "Cote D'ivoire"] <- "Côte d'Ivoire"
-datos1$region[datos1$region == "Central African Republic (the)"] <- "Central African Republic"
-datos1$region[datos1$region == "Republic of Korea (the)"] <- "Republic of Korea"
-datos1$region[datos1$region == "Syrian Arab Republic (the)"] <- "Syria"
-datos1$region[datos1$region == "Philippines (the)"] <- "Philippines"
-datos1$region[datos1$region == "United Republic of Tanzania (the)"] <- "Tanzania"
-datos1$region[datos1$region == "United States of America (the)"] <- "USA"
-datos1$region[datos1$region == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
-datos1$region[datos1$region == "Niger (the)"] <- "Niger"
-datos1$region[datos1$region == "Congo (the)"] <- "Republic of the Congo"
-datos1$region[datos1$region == "State of Palestine"] <- "Palestine"
-datos1$region[datos1$region == "Viet Nam"] <- "Vietnam"
-datos1$region[datos1$region == "Czechia"] <- "Czech Republic"
-datos1$region[datos1$region == "Democratic Rep. of the Congo (the)"] <- "Democratic Republic of the Congo"
-datos1$region[datos1$region == "Sudan (the)"] <- "Sudan"
-datos1$region[datos1$region == "Dominican Republic (the)"] <- "Dominican Republic"
-datos1$region[datos1$region == "Gambia (the)"] <- "The Gambia"
-datos1$region[datos1$region == "Lao People's Democratic Rep. (the)"] <- "Lao PDR"
-datos1$region[datos1$region == "Democratic People's Rep. of Korea (the)"] <- "Dem. Rep. Korea"
-datos1$region[datos1$region == "Iran (Islamic Republic of)"] <- "Iran"
-datos1$region[datos1$region == "Republic of Moldova (the)"] <- "Moldova"
-datos1$region[datos1$region == "North Macedonia"] <- "Macedonia"
+datos1$sovereignt = tolower(datos1$Country)
+datos1$sovereignt = unlist(lapply(datos1$sovereignt, FUN=toTitleCase))
+datos1$sovereignt[datos1$sovereignt == "Bolivia (Plurinational State of)"] <- "Bolivia"
+datos1$sovereignt[datos1$sovereignt == "Brunei Darussalam"] <- "Brunei"
+datos1$sovereignt[datos1$sovereignt == "Cabo Verde"] <- "Cape Verde"
+datos1$sovereignt[datos1$sovereignt == "Central African Republic (the)"] <- "Central African Republic"
+datos1$sovereignt[datos1$sovereignt == "Comoros (the)"] <- "Comoros"
+datos1$sovereignt[datos1$sovereignt == "Congo (the)"] <- "Republic of Congo"
+datos1$sovereignt[datos1$sovereignt == "Cote D'ivoire"] <- "Ivory Coast"
+datos1$sovereignt[datos1$sovereignt == "Czechia"] <- "Czech Republic"
+datos1$sovereignt[datos1$sovereignt == "Democratic People's Rep. of Korea (the)"] <- "North Korea"
+datos1$sovereignt[datos1$sovereignt == "Republic of Korea (the)"] <- "South Korea"
+datos1$sovereignt[datos1$sovereignt == "Democratic Rep. of the Congo (the)"] <- "Democratic Republic of the Congo"
+datos1$sovereignt[datos1$sovereignt == "Dominican Republic (the)"] <- "Dominican Republic"
+datos1$sovereignt[datos1$sovereignt == "Eswatini"] <- "Swaziland"
+datos1$sovereignt[datos1$sovereignt == "Gambia (the)"] <- "Gambia"
+datos1$sovereignt[datos1$sovereignt == "Guinea-Bissau"] <- "Guinea Bissau"
+datos1$sovereignt[datos1$sovereignt == "Iran (Islamic Republic of)"] <- "Iran"
+datos1$sovereignt[datos1$sovereignt == "Lao People's Democratic Rep. (the)"] <- "Laos"
+datos1$sovereignt[datos1$sovereignt == "Niger (the)"] <- "Niger"
+datos1$sovereignt[datos1$sovereignt == "North Macedonia"] <- "Macedonia"
+datos1$sovereignt[datos1$sovereignt == "Philippines (the)"] <- "Philippines"
+datos1$sovereignt[datos1$sovereignt == "Republic of Moldova (the)"] <- "Moldova"
+datos1$sovereignt[datos1$sovereignt == "Serbia"] <- "Republic of Serbia"
+datos1$sovereignt[datos1$sovereignt == "State of Palestine"] <- "Israel"
+datos1$sovereignt[datos1$sovereignt == "Sudan (the)"] <- "Sudan"
+datos1$sovereignt[datos1$sovereignt == "Syrian Arab Republic (the)"] <- "Syria"
+datos1$sovereignt[datos1$sovereignt == "Timor-Leste"] <- "East Timor"
+datos1$sovereignt[datos1$sovereignt == "United Republic of Tanzania (the)"] <- "United Republic of Tanzania"
+datos1$sovereignt[datos1$sovereignt == "United States of America (the)"] <- "United States of America"
+datos1$sovereignt[datos1$sovereignt == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
+datos1$sovereignt[datos1$sovereignt == "Viet Nam"] <- "Vietnam"
 
-datos1 <- datos1[!(datos1$region =="Bahrain"),]
-datos1 <- datos1[!(datos1$region =="Barbados"),]
-datos1 <- datos1[!(datos1$region =="Cabo Verde"),]
-datos1 <- datos1[!(datos1$region =="Comoros (the)"),]
-datos1 <- datos1[!(datos1$region =="Kiribati"),]
-datos1 <- datos1[!(datos1$region =="Maldives"),]
-datos1 <- datos1[!(datos1$region =="Marshall Islands"),]
-datos1 <- datos1[!(datos1$region =="Mauritius"),]
-datos1 <- datos1[!(datos1$region =="Nauru"),]
-datos1 <- datos1[!(datos1$region =="Saint Lucia"),]
-datos1 <- datos1[!(datos1$region =="Samoa"),]
-datos1 <- datos1[!(datos1$region =="Seychelles"),]
-datos1 <- datos1[!(datos1$region =="Singapore"),]
-datos1 <- datos1[!(datos1$region =="Tonga"),]
+datos1 <- datos1[!(datos1$sovereignt =="Tuvalu"),]
+
 
 
 fillVoids <-function(malf, mapdataGlobal)

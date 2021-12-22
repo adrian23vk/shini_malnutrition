@@ -3,7 +3,14 @@ library(ggplot2)
 library(hrbrthemes)
 library(gridExtra)
 library(scales)
+library("rnaturalearth")
+library("rnaturalearthdata")
+library(sf)
+library(tmap)  
+library(XML)
 
+library(maps)
+library(leaflet)
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
@@ -86,57 +93,51 @@ server <- function(input, output) {
   })
   
   observe({
-  output$mapplot <- renderPlot({
-
-    misdatos = datos1
-    MalnutritionData = misdatos[,c("region", malnut2())]
-      
-    mapdata <-map_data("world")
-    mapdata <- left_join(mapdata, MalnutritionData, by = "region")
-    
-    mapdata2 <- fillVoids(malnut2(), mapdata)
-
-    if(malnut2() == "Severe.Wasting"){
-      
-      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
-        geom_polygon(aes(fill =Severe.Wasting ), color = "black")
-      color = "red"
-    }else if(malnut2() == "Wasting"){
-      
-      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
-        geom_polygon(aes(fill =Wasting ), color = "black")
-      color = "blue"
-    }else if(malnut2() == "Overweight"){
-      
-      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
-        geom_polygon(aes(fill =Overweight ), color = "black")
-      color = "green"
-    }else if(malnut2() == "Stunting"){
-      
-      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
-        geom_polygon(aes(fill =Stunting ), color = "black")
-      color = "deeppink"
-    }else if (malnut2() == "Underweight"){
-      map1 <- ggplot(mapdata2, aes(x = long, y = lat, group = group )) +
-        geom_polygon(aes(fill =Underweight ), color = "black")
-      color = "purple"
-    }
+  output$mapplot <- renderLeaflet({
 
     
-    map1 <- map1 + scale_fill_gradient2(name = paste("Percentaje of ", malnut2()), low = muted("gold"), high = muted("firebrick3")) + 
-      theme(axis.text.x = element_blank(),
-            axis.text.y = element_blank(),
-            axis.ticks = element_blank(),
-            axis.title.x = element_blank(),
-            axis.title.y = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            panel.background = element_blank(),
-            panel.border = element_rect(colour = "black", fill=NA, size=1))
-    map1
+    datosred = datos1[,c("sovereignt", malnut2())]
+    
+    
+    world1 <- ne_countries(scale = "medium", returnclass = "sf")
+    world1 <- left_join(world1,datosred, by = "sovereignt")
+
+    selected = world1[c(malnut2())]
+    st_geometry(selected) <- NULL
+    
+    pal <- colorBin("YlOrRd", domain = as.numeric(unlist(selected)) , na.color = "gainsboro")
+    
+    labels <- sprintf(
+      "<strong>%s</strong><br/>%g&#37",
+      world1$sovereignt, as.numeric(unlist(selected)) 
+    ) %>% lapply(htmltools::HTML)
+    
+    
+    leaflet(world1) %>%
+      addTiles() %>%  addPolygons(
+        fillColor = ~pal(as.numeric(unlist(selected)) ),
+        weight = 1,
+        opacity = 1,
+        color = "grey",
+        dashArray = "3",
+        fillOpacity = 0.7,
+        highlightOptions = highlightOptions(
+          weight = 1,
+          color = "black",
+          dashArray = "",
+          fillOpacity = 0.7,
+          bringToFront = TRUE),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto")) %>%
+      addLegend(pal = pal, values = as.numeric(unlist(selected)) , opacity = 0.7, title = paste("Percentage of ", malnut2()),
+                position = "bottomright")
+    
+    
     
       })
-  
 
   })
 }

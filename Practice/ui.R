@@ -1,4 +1,4 @@
- 
+library(leaflet)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   useShinyjs(),
@@ -44,7 +44,7 @@ ui <- fluidPage(
                           
                         ),
                         mainPanel(
-                          plotOutput("mapplot")
+                          leafletOutput("mapplot")
                         ),
                         fluid = TRUE) 
                       
