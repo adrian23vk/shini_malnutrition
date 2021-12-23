@@ -151,9 +151,9 @@ server <- function(input, output,session) {
     
     id <- input$mapplot_shape_click$id
     
-    selected2 = world1[c(malnut2(), "Country")]
-    st_geometry(selected) <- NULL
-    if(IS.NULL(selected2[malnut2(),id])){
+    selected2 = as.data.frame(world1[c(malnut2(), "Country")])
+
+    if(is.null(selected2[malnut2(),id])==FALSE){
       updateSelectInput(session, "Country", selected = id)
       updateSelectInput(session, "MalnutritionType", selected = malnut2())
       updateCheckboxInput(session,"Compare", value = FALSE)
