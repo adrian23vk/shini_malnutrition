@@ -5,6 +5,26 @@ ui <- fluidPage(
   # Application title
   titlePanel("Malnutrition summary"),
   navbarPage("Menu", id = "panels",
+             tabPanel("Geographical distribution of malnutrition",
+                      sidebarLayout(
+                        sidebarPanel(
+                          
+                          selectInput("MalnutritionType2", "Malnutrition type",
+                                      choices = listTypeMal)
+                          
+                        ),
+                        mainPanel(
+                          
+                          leafletOutput("mapplot")%>% withSpinner(),
+                          textOutput("prueba")
+                          
+                          
+                          
+                        ),
+                        fluid = TRUE) 
+                      
+             )
+             ,
              tabPanel("Malnutrition around the world",
                       sidebarLayout(
                         sidebarPanel(
@@ -29,26 +49,8 @@ ui <- fluidPage(
                         ),
                       fluid = TRUE) 
                       
-             ),
-             tabPanel("Geographical distribution of malnutrition",
-                      sidebarLayout(
-                        sidebarPanel(
-                          
-                          selectInput("MalnutritionType2", "Malnutrition type",
-                                      choices = listTypeMal)
-                          
-                        ),
-                        mainPanel(
-
-                          leafletOutput("mapplot")%>% withSpinner(),
-                          textOutput("prueba")
-
-
-
-                        ),
-                        fluid = TRUE) 
-                      
              )
+             
              
   )
   

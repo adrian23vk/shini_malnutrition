@@ -124,7 +124,7 @@ server <- function(input, output,session) {
         color = "grey",
         dashArray = "3",
         fillOpacity = 0.7,
-        popup = paste(actionButton(inputId = "idButton", label = paste("Temporal analysys"), 
+        popup = paste(actionButton(inputId = "idButton", label = paste("View temporal flow"), 
                                                            onclick = 'Shiny.setInputValue(\"button_click\", this.id, {priority: \"event\"})')),
         highlightOptions = highlightOptions(
           weight = 1,
@@ -150,8 +150,8 @@ server <- function(input, output,session) {
     id <- input$mapplot_shape_click$id
     updateSelectInput(session, "Country", selected = id)
     
-    #updateSelectInput(session, "MalnutritionType", selected = malnut2())
-    #updateTabsetPanel(session, "panels",selected = "Malnutrition around the world")
+    updateSelectInput(session, "MalnutritionType", selected = malnut2())
+    updateTabsetPanel(session, "panels",selected = "Malnutrition around the world")
   })
 
   })
