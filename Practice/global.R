@@ -3,6 +3,7 @@ library(shinyjs)
 library(extrafont)
 library(tidyverse)
 library(tools)
+library(shinycssloaders)
 
 
 #1 PLOT

@@ -44,7 +44,7 @@ ui <- fluidPage(
                           
                         ),
                         mainPanel(
-                          leafletOutput("mapplot")
+                          leafletOutput("mapplot") %>% withSpinner()
                         ),
                         fluid = TRUE) 
                       
