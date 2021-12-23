@@ -2,15 +2,12 @@ datos1  = read.csv("country-wise-average.csv", sep = ",")
 datos2  = read.csv("malnutrition-estimates.csv", sep = ",")
 
 library(XML)
-library(ggplot2)
 library(scales)
 library(plyr)
 library(maps)
 library("rnaturalearth")
 library("rnaturalearthdata")
 library(sf)
-library(raster)
-library(dplyr)
 library(tmap)    # for static and interactive maps
 library(ggplot2) # tidyverse data visualization package
 library(tidyverse)
@@ -51,13 +48,8 @@ datos1$sovereignt[datos1$sovereignt == "United Republic of Tanzania (the)"] <- "
 datos1$sovereignt[datos1$sovereignt == "United States of America (the)"] <- "United States of America"
 datos1$sovereignt[datos1$sovereignt == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
 datos1$sovereignt[datos1$sovereignt == "Viet Nam"] <- "Vietnam"
-
-
-
-
-
-
 datos1 <- datos1[!(datos1$sovereignt =="Tuvalu"),]
+
 
 datosred = datos1[,c("sovereignt", "Severe.Wasting")]
 
@@ -71,21 +63,21 @@ world1 <- ne_countries(scale = "medium", returnclass = "sf")
 world1 <- left_join(world1,datosred, by = "sovereignt")
 
 
+selected = world1[c("Severe.Wasting")]
+st_geometry(selected) <- NULL
 
-#world1$Severe.Wasting[is.na(world1$Severe.Wasting)==TRUE]<-0
-class(world1)
 
+pal <- colorBin("YlOrRd", domain = as.numeric(unlist(selected)) , na.color = "gainsboro")
 
-pal <- colorBin("YlOrRd", domain = world1$Severe.Wasting, na.color = "gainsboro")
 labels <- sprintf(
   "<strong>%s</strong><br/>%g&#37",
-  world1$sovereignt, world1$Severe.Wasting
+  world1$sovereignt, as.numeric(unlist(selected))
 ) %>% lapply(htmltools::HTML)
 
 
 m <- leaflet(world1) %>%
   addTiles()%>%  addPolygons(
-    fillColor = ~pal(world1$Severe.Wasting),
+    fillColor = ~pal(as.numeric(unlist(selected))),
     weight = 1,
     opacity = 1,
     color = "grey",
@@ -102,7 +94,7 @@ m <- leaflet(world1) %>%
       style = list("font-weight" = "normal", padding = "3px 8px"),
       textsize = "15px",
       direction = "auto")) %>%
-  addLegend(pal = pal, values = world1$Severe.Wasting, opacity = 0.7, title = "Percentage of malnutrition",
+  addLegend(pal = pal, values = as.numeric(unlist(selected)), opacity = 0.7, title = "Percentage of malnutrition",
             position = "bottomright")
 m
 
