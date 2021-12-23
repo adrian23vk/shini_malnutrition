@@ -77,7 +77,8 @@ server <- function(input, output,session) {
           xlab('Year')+
           ylab(malnut()) +
           geom_point(aes( color=Country),size =6)+
-          theme_minimal(base_size = 20)
+          #theme_minimal(base_size = 20) +
+          theme(legend.position = "bottom" , legend.key = element_blank() )
         country1Plot
         
     }
@@ -89,7 +90,8 @@ server <- function(input, output,session) {
         xlab('Year')+
         ylab(malnut()) +
         geom_point(aes( color=Country),size=6)+
-        theme_minimal(base_size = 20)
+        # theme_minimal(base_size = 20) +
+        theme(legend.position = "bottom", legend.key = element_blank()  )
     }
     })
   })
@@ -151,6 +153,7 @@ server <- function(input, output,session) {
     updateSelectInput(session, "Country", selected = id)
     
     updateSelectInput(session, "MalnutritionType", selected = malnut2())
+    updateCheckboxInput(session,"Compare", value = FALSE)
     updateTabsetPanel(session, "panels",selected = "Malnutrition around the world")
   })
 

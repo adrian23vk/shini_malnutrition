@@ -54,37 +54,8 @@ datos1$sovereignt[datos1$sovereignt == "United Republic of Tanzania (the)"] <- "
 datos1$sovereignt[datos1$sovereignt == "United States of America (the)"] <- "United States of America"
 datos1$sovereignt[datos1$sovereignt == "Venezuela (Bolivarian Republic of)"] <- "Venezuela"
 datos1$sovereignt[datos1$sovereignt == "Viet Nam"] <- "Vietnam"
-
 datos1 <- datos1[!(datos1$sovereignt =="Tuvalu"),]
 
 
 
-fillVoids <-function(malf, mapdataGlobal)
-{
-  if(malf == "Severe.Wasting"){
-    mapdataGlobal$Severe.Wasting[is.na(mapdataGlobal$Severe.Wasting)] <- 0
-  }else if(malf == "Wasting"){
-    mapdataGlobal$Wasting[is.na(mapdataGlobal$Wasting)] <- 0
-  }else if(malf == "Overweight"){
-    mapdataGlobal$Overweight[is.na(mapdataGlobal$Overweight)] <- 0
-  }else if(malf == "Stunting"){
-    mapdataGlobal$Stunting[is.na(mapdataGlobal$Stunting)] <- 0
-  }else if (malf == "Underweight"){
-    mapdataGlobal$Underweight[is.na(mapdataGlobal$Underweight)] <- 0
-  }else{
-    mapdataGlobal$U5.Population...000s.[is.na(mapdataGlobal$U5.Population...000s.)] <- 0
-  }
-  return(mapdataGlobal) 
-}
-
-
-
-#grafo 3  deads by income
-#data of an income
-
-getDataIncome<- function(income)
-{
-  dataIncome<-data2[,"Income.Clasification"==income]
-  dataIncome<-dataIncome[,c("Country","U5 Population ('000s)")]
-}
 
