@@ -4,7 +4,7 @@ ui <- fluidPage(
   useShinyjs(),
   # Application title
   titlePanel("Malnutrition summary"),
-  navbarPage("Menu",
+  navbarPage("Menu", id = "panels",
              tabPanel("Malnutrition around the world",
                       sidebarLayout(
                         sidebarPanel(
@@ -13,16 +13,14 @@ ui <- fluidPage(
                                       choices = listCountry
                           ),
                      
-                           selectInput("Country2", "Second country",
+                          selectInput("Country2", "Second country",
                                        choices = listCountry
-                           )
-                        ,
+                           ),
   
                           checkboxInput("Compare", "Compare", FALSE),
                           
                           selectInput("MalnutritionType", "Malnutrition type",
-                                      choices = listTypeMal
-                          )
+                                      choices = listTypeMal)
                           
                           
                         ),
@@ -36,15 +34,13 @@ ui <- fluidPage(
                       sidebarLayout(
                         sidebarPanel(
                           
-                          
                           selectInput("MalnutritionType2", "Malnutrition type",
-                                      choices = listTypeMal
-                          )
-                          
+                                      choices = listTypeMal)
                           
                         ),
                         mainPanel(
-                          leafletOutput("mapplot")
+                          leafletOutput("mapplot"),
+                          textOutput("prueba")
                         ),
                         fluid = TRUE) 
                       

@@ -13,7 +13,7 @@ library(maps)
 library(leaflet)
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output,session) {
   tam = 0
   shinyjs::hide(id = "Country2")
   country <- reactive({
@@ -33,6 +33,8 @@ server <- function(input, output) {
   compare<-reactive({
     input$Compare
   })
+  
+  
   
   observeEvent(input$Compare, {
     
@@ -96,7 +98,7 @@ server <- function(input, output) {
   output$mapplot <- renderLeaflet({
 
     
-    datosred = datos1[,c("sovereignt", malnut2())]
+    datosred = datos1[,c("sovereignt", malnut2(), "Country")]
     
     
     world1 <- ne_countries(scale = "medium", returnclass = "sf")
@@ -115,12 +117,15 @@ server <- function(input, output) {
     
     leaflet(world1) %>%
       addTiles() %>%  addPolygons(
+        layerId = world1$Country,
         fillColor = ~pal(as.numeric(unlist(selected)) ),
         weight = 1,
         opacity = 1,
         color = "grey",
         dashArray = "3",
         fillOpacity = 0.7,
+        popup = paste(actionButton(inputId = "idButton", label = paste("Temporal analysys"), 
+                                                           onclick = 'Shiny.setInputValue(\"button_click\", this.id, {priority: \"event\"})')),
         highlightOptions = highlightOptions(
           weight = 1,
           color = "black",
@@ -138,6 +143,16 @@ server <- function(input, output) {
     
     
       })
+ 
+  observeEvent(input$button_click, {
+    
+    
+    id <- input$mapplot_shape_click$id
+    updateSelectInput(session, "Country", selected = id)
+    
+    #updateSelectInput(session, "MalnutritionType", selected = malnut2())
+    #updateTabsetPanel(session, "panels",selected = "Malnutrition around the world")
+  })
 
   })
 }
