@@ -59,7 +59,5 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 
 
-world1 =0
-
 
 
