@@ -3,13 +3,14 @@ library(shinyjs)
 library(extrafont)
 library(tidyverse)
 library(tools)
-loadfonts(device = "win")
+library(shinycssloaders)
+
+
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
 data2 <- read.csv("country-wise-average.csv")
 datos1 = data2
 data1[is.na(data1)] = 0
-
 listCountry <-data2["Country"]
 cols <- colnames(data2)
 listTypeMal<-cols[3:7] 
