@@ -100,11 +100,11 @@ server <- function(input, output,session) {
   output$mapplot <- renderLeaflet({
 
     
-    datosred = datos1[,c("sovereignt", malnut2(), "Country")]
+    datosred = datos1[,c("admin", malnut2(), "Country")]
     
     
     world1 <- ne_countries(scale = "medium", returnclass = "sf")
-    world1 <- left_join(world1,datosred, by = "sovereignt")
+    world1 <- left_join(world1,datosred, by = "admin")
 
     selected = world1[c(malnut2())]
     st_geometry(selected) <- NULL
@@ -113,7 +113,7 @@ server <- function(input, output,session) {
     
     labels <- sprintf(
       "<strong>%s</strong><br/>%g&#37",
-      world1$sovereignt, as.numeric(unlist(selected)) 
+      world1$admin, as.numeric(unlist(selected)) 
     ) %>% lapply(htmltools::HTML)
     
     
@@ -150,11 +150,16 @@ server <- function(input, output,session) {
     
     
     id <- input$mapplot_shape_click$id
-    updateSelectInput(session, "Country", selected = id)
     
-    updateSelectInput(session, "MalnutritionType", selected = malnut2())
-    updateCheckboxInput(session,"Compare", value = FALSE)
-    updateTabsetPanel(session, "panels",selected = "Malnutrition around the world")
+    selected2 = world1[c(malnut2(), "Country")]
+    st_geometry(selected) <- NULL
+    if(IS.NULL(selected2[malnut2(),id])){
+      updateSelectInput(session, "Country", selected = id)
+      updateSelectInput(session, "MalnutritionType", selected = malnut2())
+      updateCheckboxInput(session,"Compare", value = FALSE)
+      updateTabsetPanel(session, "panels",selected = "Malnutrition around the world")
+    }
+
   })
 
   })
