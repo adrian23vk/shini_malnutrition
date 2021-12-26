@@ -57,8 +57,6 @@ datos1$admin[datos1$admin == "Viet Nam"] <- "Vietnam"
 datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 
-
-
 world1 =0
 
 

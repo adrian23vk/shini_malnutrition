@@ -1,0 +1,10 @@
+INFO [2021-12-26 21:26:05] $x
+INFO [2021-12-26 21:26:05] list(datos1$Income.Classification[datos1$Income.Classification == 
+INFO [2021-12-26 21:26:05]     1], datos1$heal[datos1$heal == "a"])
+INFO [2021-12-26 21:26:05] 
+INFO [2021-12-26 21:26:05] $category.names
+INFO [2021-12-26 21:26:05] c("Income.Classification", "b")
+INFO [2021-12-26 21:26:05] 
+INFO [2021-12-26 21:26:05] $filename
+INFO [2021-12-26 21:26:05] [1] "aaa.png"
+INFO [2021-12-26 21:26:05] 
