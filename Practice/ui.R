@@ -28,17 +28,11 @@ ui <- fluidPage(
                                       choices = listTypeMal)
                           
                         
-                        
-                          
-
-                          
-                          
-                        
                         ) 
                       
                       
                       
-             )
+                      ,fluid = TRUE)
              ,
              tabPanel("Malnutrition around the world",
                       sidebarLayout(
@@ -64,9 +58,31 @@ ui <- fluidPage(
                         ),
                       fluid = TRUE) 
                       
-             )
+             ),
+             tabPanel("Malnutrition vs wealth",
+               
+               sidebarLayout(
+                 sidebarPanel(
+                   
+                   selectInput("Income", "Income", choices = incomes),
+                 
+                   selectInput("Health", "Heath", choices = health)
+                 ),
+                 mainPanel(
+                   tabsetPanel(
+                     tabPanel("Plot", plotOutput("venn")),
+                     tabPanel("Extra", plotOutput("extra"))
+
+
+                   )
+
+                 ),
+                 
+                 
+               )
              
+             ) 
              
-  )
+    )
   
 )

@@ -46,7 +46,7 @@ server <- function(input, output,session) {
     
 
   })
-  
+  #1º
   observe({
     
   output$plot <- renderPlot({
@@ -95,7 +95,7 @@ server <- function(input, output,session) {
     }
     })
   })
-  
+  #2º
   observe({
   output$mapplot <- renderLeaflet({
 
@@ -170,4 +170,24 @@ server <- function(input, output,session) {
   })
 
   })
+  
+  #3º
+  observe({
+    output$venn <- renderPlot({
+      
+      
+    })
+    output$extra <- renderPlot({
+      
+      
+    })
+    
+    
+    
+  })
+  
+  
+  
+  
+  
 }

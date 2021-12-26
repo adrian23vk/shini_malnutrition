@@ -56,6 +56,9 @@ datos1$admin[datos1$admin == "Venezuela (Bolivarian Republic of)"] <- "Venezuela
 datos1$admin[datos1$admin == "Viet Nam"] <- "Vietnam"
 datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
+#3º
+incomes= c('Low income','Lower middle income', 'Upper middle income', 'High income')
+health= c('Bad heath','Lower middle health', 'Upper middle health', 'Good health')
 
 
 
