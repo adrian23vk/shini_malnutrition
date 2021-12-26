@@ -46,7 +46,7 @@ server <- function(input, output,session) {
     
 
   })
-  
+  #1º
   observe({
     
   output$plot <- renderPlot({
@@ -95,7 +95,7 @@ server <- function(input, output,session) {
     }
     })
   })
-  
+  #2º
   observe({
   output$mapplot <- renderLeaflet({
 
@@ -150,10 +150,17 @@ server <- function(input, output,session) {
     
     
     id <- input$mapplot_shape_click$id
+    datosred = datos1[,c("admin", malnut2(), "Country")]
     
-    selected2 = as.data.frame(world1[c(malnut2(), "Country")])
-
-    if(is.null(selected2[malnut2(),id])==FALSE){
+    world1 <- ne_countries(scale = "medium", returnclass = "sf")
+    world1 <- left_join(world1,datosred, by = "admin")
+    selected2 = as.data.frame(world1[c(malnut2(), 'Country')])
+    check = as.data.frame(selected2[,1:2])
+    check2= as.list(check[,2]==id);
+    valores = check[check2==TRUE,]
+    valores <- valores[!is.na(valores[1]),]
+    valores <- valores[!is.na(valores[2]),]
+    if(dim(valores)[1] != 0L){
       updateSelectInput(session, "Country", selected = id)
       updateSelectInput(session, "MalnutritionType", selected = malnut2())
       updateCheckboxInput(session,"Compare", value = FALSE)
@@ -163,4 +170,24 @@ server <- function(input, output,session) {
   })
 
   })
+  
+  #3º
+  observe({
+    output$venn <- renderPlot({
+      
+      
+    })
+    output$extra <- renderPlot({
+      
+      
+    })
+    
+    
+    
+  })
+  
+  
+  
+  
+  
 }
