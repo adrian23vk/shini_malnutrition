@@ -51,7 +51,7 @@ datos1$sovereignt[datos1$sovereignt == "Viet Nam"] <- "Vietnam"
 datos1 <- datos1[!(datos1$sovereignt =="Tuvalu"),]
 
 
-datosred = datos1[,c("sovereignt", "Severe.Wasting")]
+datosred = datos1[,c("sovereignt", "Severe.Wasting", "Country")]
 
 
 library(maps)
@@ -75,14 +75,17 @@ labels <- sprintf(
 ) %>% lapply(htmltools::HTML)
 
 
-m <- leaflet(world1) %>%
-  addTiles()%>%  addPolygons(
-    fillColor = ~pal(as.numeric(unlist(selected))),
+leaflet(world1) %>%
+  addTiles() %>%  addPolygons(
+    layerId = world1$Country,
+    fillColor = ~pal(as.numeric(unlist(selected)) ),
     weight = 1,
     opacity = 1,
     color = "grey",
     dashArray = "3",
     fillOpacity = 0.7,
+    popup = paste(actionButton(inputId = "idButton", label = paste("View temporal flow"), 
+                               onclick = 'Shiny.setInputValue(\"button_click\", this.id, {priority: \"event\"})')),
     highlightOptions = highlightOptions(
       weight = 1,
       color = "black",
@@ -94,7 +97,8 @@ m <- leaflet(world1) %>%
       style = list("font-weight" = "normal", padding = "3px 8px"),
       textsize = "15px",
       direction = "auto")) %>%
-  addLegend(pal = pal, values = as.numeric(unlist(selected)), opacity = 0.7, title = "Percentage of malnutrition",
+  addLegend(pal = pal, values = as.numeric(unlist(selected)) , opacity = 0.7, title = paste("Percentage of "),
             position = "bottomright")
-m
+
+
 
