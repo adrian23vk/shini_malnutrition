@@ -4,16 +4,21 @@ library(extrafont)
 library(tidyverse)
 library(tools)
 library(shinycssloaders)
+library(factoextra)
 
 
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
 data2 <- read.csv("country-wise-average.csv")
+
 datos1 = data1
 library(dplyr)
 datos1 = datos1 %>% 
   group_by(Country) %>% 
   filter(Year==max(Year))
+
+datos3 = data2
+# parte 1
 data1[is.na(data1)] = 0
 listCountry <-data2["Country"]
 cols <- colnames(data2)
@@ -62,7 +67,62 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 #3º
 incomes= c('Low income','Lower middle income', 'Upper middle income', 'High income')
-health= c('Bad heath','Lower middle health', 'Upper middle health', 'Good health')
+health= c('Bad health','Lower middle health', 'Upper middle health', 'Good health')
+
+
+f=datos3[,c(3,4,5,6,7)] 
+f$Severe.Wasting[is.na(f$Severe.Wasting)]<-mean(f$Severe.Wasting,na.rm = TRUE)
+f$Wasting[is.na(f$Wasting)]<-mean(f$Wasting, na.rm = TRUE)
+f$Overweight[is.na(f$Overweight)]<-mean(f$Overweight, na.rm = TRUE)
+f$Stunting[is.na(f$Stunting)]<-mean(f$Stunting, na.rm = TRUE)
+f$Underweight[is.na(f$Underweight)]<-mean(f$Underweight, na.rm = TRUE)
+
+fviz_nbclust(f, FUNcluster = kmeans  ) 
+
+km = kmeans(x = f, centers = 4) 
+
+fviz_cluster(km, data = f, 
+             
+             geom = "point", 
+             ellipse.type = "convex",  
+             ggtheme = theme_bw() 
+) 
+
+columnKmeans=as.data.frame(km$cluster) 
+colnames(columnKmeans) <- c('ori')
+dataKmeans= as.data.frame(km$centers) 
+dataKmeans$index = c(1,2,3,4)
+orderedCenters= dataKmeans[order(dataKmeans$Severe.Wasting),] 
+orderedCenters$order = rev(health)
+columnKmeans$ord = columnKmeans
+columnKmeans$ord[columnKmeans$ord==1] <- orderedCenters$order[orderedCenters$index==1] 
+columnKmeans$ord[columnKmeans$ord==2] <- orderedCenters$order[orderedCenters$index==2] 
+columnKmeans$ord[columnKmeans$ord==3] <- orderedCenters$order[orderedCenters$index==3] 
+columnKmeans$ord[columnKmeans$ord==4] <- orderedCenters$order[orderedCenters$index==4] 
+
+datos3$heal = columnKmeans$ord
+
+
+library("ggvenn")
+getVenn <- function(incomeX, health)
+{
+  d=datos3
+  income=traductorIncome(incomeX)
+  
+  lista = list(Income = datos3$Country[datos3$Income.Classification==income],Health = datos3$Country[datos3$heal==health])
+  ggvenn(data = lista,
+         columns = c('Income','Health') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
+}
+traductorIncome <-function(income)
+{
+  switch (income,
+          'Low income' = 0,
+          'Lower middle income'=1,
+          'Upper middle income'=2,
+          'High income'=3
+  )
+}
+
 
 
 
