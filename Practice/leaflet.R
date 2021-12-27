@@ -1,4 +1,4 @@
-datos1  = read.csv("country-wise-average.csv", sep = ",")
+dato1  = read.csv("country-wise-average.csv", sep = ",")
 datos2  = read.csv("malnutrition-estimates.csv", sep = ",")
 
 library(XML)
@@ -12,8 +12,15 @@ library(tmap)    # for static and interactive maps
 library(ggplot2) # tidyverse data visualization package
 library(tidyverse)
 
+library(tidyquery)
 
 
+
+
+library(dplyr)
+datos1 = datos2 %>% 
+  group_by(Country) %>% 
+  filter(Year==max(Year))
 
 library(tools)
 datos1$sovereignt = tolower(datos1$Country)

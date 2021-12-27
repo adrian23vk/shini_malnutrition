@@ -34,6 +34,14 @@ server <- function(input, output,session) {
     input$Compare
   })
   
+  health <-reactive({
+    
+    input$Health
+  })
+  income <-reactive({
+    
+    input$Income
+  })
   
   
   observeEvent(input$Compare, {
@@ -174,7 +182,7 @@ server <- function(input, output,session) {
   #3º
   observe({
     output$venn <- renderPlot({
-      
+      getVenn(income(),health())
       
     })
     output$extra <- renderPlot({
