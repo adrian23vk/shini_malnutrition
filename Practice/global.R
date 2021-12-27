@@ -9,7 +9,11 @@ library(shinycssloaders)
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
 data2 <- read.csv("country-wise-average.csv")
-datos1 = data2
+datos1 = data1
+library(dplyr)
+datos1 = datos1 %>% 
+  group_by(Country) %>% 
+  filter(Year==max(Year))
 data1[is.na(data1)] = 0
 listCountry <-data2["Country"]
 cols <- colnames(data2)
