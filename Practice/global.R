@@ -65,6 +65,15 @@ datos1$admin[datos1$admin == "Venezuela (Bolivarian Republic of)"] <- "Venezuela
 datos1$admin[datos1$admin == "Viet Nam"] <- "Vietnam"
 datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
+
+#PLOT 3
+
+selectedCols = data2
+selectedCols <- selectedCols[,c(2,3,4,5,6,7,8)] 
+reqCols <- colnames(selectedCols)
+
+
+
 #3º
 incomes= c('Low income','Lower middle income', 'Upper middle income', 'High income')
 health= c('Bad health','Lower middle health', 'Upper middle health', 'Good health')

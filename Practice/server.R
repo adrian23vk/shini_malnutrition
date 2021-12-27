@@ -12,6 +12,9 @@ library(XML)
 library(maps)
 library(leaflet)
 
+library(GGally)
+library(corrgram)
+
 # Define server logic required to draw a histogram
 server <- function(input, output,session) {
   tam = 0
@@ -169,6 +172,25 @@ server <- function(input, output,session) {
 
   })
 
+  })
+  
+  observe({
+    output$corrplot <- renderPlot({
+      
+      df <- selectedCols[, c(input$variable1, input$variable2, 'U5.Population.1000')]
+      ggpairs(df, title="Correlogram of different variables with under 5 population")
+
+    })
+    
+  })
+  
+  observe({
+    output$colorcorr <- renderPlot({
+      
+      df <- selectedCols[, c(input$variable1, input$variable2, 'U5.Population.1000')]
+      ggcorr(df, low = "#3B9AB2", mid = "lightgrey", high = "#F21A00", nbreaks = 15)
+    })
+    
   })
   
   #3º

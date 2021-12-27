@@ -59,6 +59,32 @@ ui <- fluidPage(
                       fluid = TRUE) 
                       
              ),
+             tabPanel("Correlograms",
+                      sidebarLayout(
+                        sidebarPanel(
+                          
+                          
+                          
+                          selectInput("variable1", "Variable 1",
+                                      choices = reqCols
+                          ),
+                          
+                          selectInput("variable2", "Variable 2",
+                                      choices = reqCols
+                          ),
+                          
+#                          selectInput("Variable3", "Variable 3",
+#                                      choices = allCols)
+                          
+                          
+                        ),
+                        mainPanel(
+                          plotOutput("corrplot"),
+                          plotOutput("colorcorr")
+                        ),
+                        fluid = TRUE) 
+                      
+             ),
              tabPanel("Malnutrition vs wealth",
                
                sidebarLayout(
