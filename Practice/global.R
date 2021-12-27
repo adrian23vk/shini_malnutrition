@@ -123,7 +123,8 @@ getVenn <- function(incomeX, health)
                      ,category = c("Income", "Health")
                      ,cat.cex = 2
                      ,cex = 2
-                     ,cat.pos = 0)
+                     ,cat.pos = 0
+                     ,print.mode = c("raw","percent"))
 }
 traductorIncome <-function(income)
 {
