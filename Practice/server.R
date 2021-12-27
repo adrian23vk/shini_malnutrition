@@ -14,7 +14,6 @@ library(leaflet)
 
 # Define server logic required to draw a histogram
 server <- function(input, output,session) {
-  tam = 0
   shinyjs::hide(id = "Country2")
   country <- reactive({
     input$Country
@@ -34,7 +33,13 @@ server <- function(input, output,session) {
     input$Compare
   })
   
+  income<-reactive({
+    input$Income
+  })
   
+  health<-reactive({
+    input$Health
+  })
   
   observeEvent(input$Compare, {
     
@@ -174,7 +179,7 @@ server <- function(input, output,session) {
   #3º
   observe({
     output$venn <- renderPlot({
-      
+      getVenn(income(),health())
       
     })
     output$extra <- renderPlot({
