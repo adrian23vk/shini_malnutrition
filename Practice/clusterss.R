@@ -1,5 +1,5 @@
-data1 <- read.csv("malnutrition-estimates.csv")
-data2 <- read.csv("country-wise-average.csv")
+data1 <- read.csv("Practice/malnutrition-estimates.csv")
+data2 <- read.csv("Practice/country-wise-average.csv")
 library(factoextra) 
 datos1 = data2
 f=datos1[,c(3,4,5,6,7)] 
@@ -36,15 +36,26 @@ columnKmeans$ord[columnKmeans$ord==4] <- orderedCenters$order[orderedCenters$ind
 datos1$heal = columnKmeans$ord
 
 
-library("ggvenn")
-
-subs = as.data.frame(datos1$Country[datos1$Income.Classification==1])
-subs$heal =  as.data.frame(datos1$Country[datos1$heal=='d'])
-colnames(subs) = c('inc','heal')
-
-lista = list(A = datos1$Country[datos1$Income.Classification==1],B = datos1$Country[datos1$heal=='d'])
-ggvenn(data = lista,
-            columns = c('A','B') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
 
 
+# subs = as.data.frame(datos1$Country[datos1$Income.Classification==income])
+# subs$heal =  as.data.frame(datos1$Country[datos1$heal==health])
+# colnames(subs) = c('inc','heal')
 
+
+lista = list(Income = datos1$Country[datos1$Income.Classification==1],Health = datos1$Country[datos1$heal=='d'], 
+             Merged=datos1$Country[datos1$heal=='d' & datos1$Income.Classification==1])
+#ggvenn(data = lista,
+#            columns = c('A','B') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
+
+
+counter= lengths(lista)
+grid.newpage()
+draw.pairwise.venn(area1 = counter[1],                        # Create pairwise venn diagram
+                   area2 = counter[2],
+                   cross.area = counter[3]
+                   ,fill=c('deepskyblue', 'yellow')
+                   ,lty = "blank"
+                  ,category = c("Income", "Health")
+      
+)

@@ -54,7 +54,7 @@ ui <- fluidPage(
                           
                         ),
                         mainPanel(
-                          plotOutput("plot")
+                          plotOutput("plot",height = 400, width = 600)
                         ),
                       fluid = TRUE) 
                       
@@ -73,8 +73,8 @@ ui <- fluidPage(
                                       choices = reqCols
                           ),
                           
-#                          selectInput("Variable3", "Variable 3",
-#                                      choices = allCols)
+                          #                          selectInput("Variable3", "Variable 3",
+                          #                                      choices = allCols)
                           
                           
                         ),

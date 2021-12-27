@@ -1,3 +1,4 @@
+
 library(shiny)
 library(ggplot2)
 library(hrbrthemes)
@@ -17,7 +18,6 @@ library(corrgram)
 
 # Define server logic required to draw a histogram
 server <- function(input, output,session) {
-  tam = 0
   shinyjs::hide(id = "Country2")
   country <- reactive({
     input$Country
@@ -37,6 +37,15 @@ server <- function(input, output,session) {
     input$Compare
   })
   
+
+  health <-reactive({
+    
+    input$Health
+  })
+  income <-reactive({
+
+    input$Income
+  })
   
   
   observeEvent(input$Compare, {
@@ -174,12 +183,13 @@ server <- function(input, output,session) {
 
   })
   
+  #HamnaPlot
   observe({
     output$corrplot <- renderPlot({
       
       df <- selectedCols[, c(input$variable1, input$variable2, 'U5.Population.1000')]
       ggpairs(df, title="Correlogram of different variables with under 5 population")
-
+      
     })
     
   })
@@ -193,10 +203,11 @@ server <- function(input, output,session) {
     
   })
   
+  
   #3º
   observe({
     output$venn <- renderPlot({
-      
+      getVenn(income(),health())
       
     })
     output$extra <- renderPlot({
@@ -213,3 +224,4 @@ server <- function(input, output,session) {
   
   
 }
+

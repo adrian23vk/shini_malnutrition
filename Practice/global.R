@@ -5,7 +5,7 @@ library(tidyverse)
 library(tools)
 library(shinycssloaders)
 library(factoextra)
-
+library("VennDiagram") 
 
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
@@ -118,9 +118,23 @@ getVenn <- function(incomeX, health)
   d=datos3
   income=traductorIncome(incomeX)
   
-  lista = list(Income = datos3$Country[datos3$Income.Classification==income],Health = datos3$Country[datos3$heal==health])
-  ggvenn(data = lista,
-         columns = c('Income','Health') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
+  lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
+               Merged=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
+  # ggvenn(data = lista,
+  #        columns = c('Income','Health') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
+  
+  counter= lengths(lista)
+  grid.newpage()
+  draw.pairwise.venn(area1 = counter[1],                        # Create pairwise venn diagram
+                     area2 = counter[2],
+                     cross.area = counter[3]
+                     ,fill=c('deepskyblue', 'red')
+                     ,lty = "blank"
+                     ,category = c("Income", "Health")
+                     ,cat.cex = 2
+                     ,cex = 2
+                     ,cat.pos = 0
+                     ,print.mode = c("raw","percent"))
 }
 traductorIncome <-function(income)
 {
@@ -131,9 +145,3 @@ traductorIncome <-function(income)
           'High income'=3
   )
 }
-
-
-
-
-
-
