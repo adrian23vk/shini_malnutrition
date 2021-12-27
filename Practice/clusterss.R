@@ -37,14 +37,17 @@ datos1$heal = columnKmeans$ord
 
 
 library("ggvenn")
+getVenn <- function(income, health)
+{
 
-subs = as.data.frame(datos1$Country[datos1$Income.Classification==1])
-subs$heal =  as.data.frame(datos1$Country[datos1$heal=='d'])
-colnames(subs) = c('inc','heal')
+# subs = as.data.frame(datos1$Country[datos1$Income.Classification==income])
+# subs$heal =  as.data.frame(datos1$Country[datos1$heal==health])
+# colnames(subs) = c('inc','heal')
 
-lista = list(A = datos1$Country[datos1$Income.Classification==1],B = datos1$Country[datos1$heal=='d'])
+lista = list(A = datos1$Country[datos1$Income.Classification==income],B = datos1$Country[datos1$heal==health])
 ggvenn(data = lista,
-            columns = c('A','B') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
+       columns = c('A','B') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
+}
 
 
 
