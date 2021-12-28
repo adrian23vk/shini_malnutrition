@@ -54,7 +54,7 @@ ui <- fluidPage(
                           
                         ),
                         mainPanel(
-                          plotOutput("plot",height = 400, width = 600)
+                          plotOutput("plot",height = 500)
                         ),
                       fluid = TRUE) 
                       

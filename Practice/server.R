@@ -151,7 +151,7 @@ server <- function(input, output,session) {
     ) %>% lapply(htmltools::HTML)
     
     
-    leaflet(world1) %>%
+    leaflet(world1 , options = leafletOptions(minZoom = 2)) %>% 
       addTiles() %>%  addPolygons(
         layerId = world1$Country,
         fillColor = ~pal(as.numeric(unlist(selected)) ),

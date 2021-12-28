@@ -6,8 +6,8 @@ library(tools)
 library(shinycssloaders)
 library(factoextra)
 library("VennDiagram") 
+library(devtools)
 library(chorddiag)
-
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
 data2 <- read.csv("country-wise-average.csv")
