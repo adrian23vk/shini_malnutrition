@@ -63,24 +63,29 @@ ui <- fluidPage(
                       sidebarLayout(
                         sidebarPanel(
                           
-                          
-                          
                           selectInput("variable1", "Variable 1",
                                       choices = reqCols
                           ),
                           
                           selectInput("variable2", "Variable 2",
                                       choices = reqCols
-                          ),
+                          ), 
                           
-                          #                          selectInput("Variable3", "Variable 3",
-                          #                                      choices = allCols)
+                         sliderInput("levelCorr", "Minimum correlation value", min = 0, max = 1, value = 0, animate = 
+                                       animationOptions(interval = 100, loop = FALSE, playButton = NULL, pauseButton = NULL),)
+                         
                           
                           
                         ),
                         mainPanel(
-                          plotOutput("corrplot"),
-                          plotOutput("colorcorr")
+                          
+
+                          tabsetPanel(
+                            tabPanel("Global Correlations",chorddiagOutput('plotChord', height = '500')),
+                            tabPanel("Explanation" , plotOutput("corrplot"),
+                                     plotOutput("colorcorr")),
+                           
+                            id ="tabCorr")
                         ),
                         fluid = TRUE) 
                       
@@ -97,7 +102,8 @@ ui <- fluidPage(
                  mainPanel(
                    tabsetPanel(
                      tabPanel("Plot", plotOutput("venn")),
-                     tabPanel("Extra", plotOutput("extra"))
+                     tabPanel("Extra", plotOutput("extra")),
+                    
 
 
                    )

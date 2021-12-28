@@ -6,6 +6,7 @@ library(tools)
 library(shinycssloaders)
 library(factoextra)
 library("VennDiagram") 
+library(chorddiag)
 
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
@@ -145,3 +146,15 @@ traductorIncome <-function(income)
           'High income'=3
   )
 }
+
+
+#plot corr
+
+g<-data2[,c(3,4,5,6,7)]
+
+g$Severe.Wasting[is.na(g$Severe.Wasting)]<-mean(g$Severe.Wasting,na.rm = TRUE)
+g$Wasting[is.na(g$Wasting)]<-mean(g$Wasting, na.rm = TRUE)
+g$Overweight[is.na(g$Overweight)]<-mean(g$Overweight, na.rm = TRUE)
+g$Stunting[is.na(g$Stunting)]<-mean(g$Stunting, na.rm = TRUE)
+g$Underweight[is.na(g$Underweight)]<-mean(g$Underweight, na.rm = TRUE)
+

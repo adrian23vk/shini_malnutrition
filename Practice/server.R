@@ -46,6 +46,11 @@ server <- function(input, output,session) {
 
     input$Income
   })
+  minCorr <-reactive({
+    
+    input$levelCorr
+  })
+  
   
   
   observeEvent(input$Compare, {
@@ -57,6 +62,23 @@ server <- function(input, output,session) {
     }
     
 
+  })
+  
+  
+  observeEvent(input$tabCorr, {
+    
+    if(input$tabCorr == "Explanation"){
+      shinyjs::hide(id = "levelCorr")
+      shinyjs::show(id = "variable1")
+      shinyjs::show(id = "variable2")
+      
+    }else{
+      shinyjs::show(id = "levelCorr")
+      shinyjs::hide(id = "variable1")
+      shinyjs::hide(id = "variable2")
+    }
+    
+    
   })
   #1º
   observe({
@@ -185,6 +207,21 @@ server <- function(input, output,session) {
   
   #HamnaPlot
   observe({
+    output$plotChord <- renderChorddiag({
+
+      
+      matriz<-cor(g)
+      matrizAbs<-abs(matriz)
+      matrizAbs[matrizAbs<as.numeric(minCorr())]=0
+      dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
+      matrizAbs
+      chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
+      
+      
+    })
+    
+  })
+  observe({
     output$corrplot <- renderPlot({
       
       df <- selectedCols[, c(input$variable1, input$variable2, 'U5.Population.1000')]
@@ -202,6 +239,11 @@ server <- function(input, output,session) {
     })
     
   })
+  
+  
+
+
+  
   
   
   #3º
