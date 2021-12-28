@@ -16,6 +16,10 @@ library(leaflet)
 library(GGally)
 library(corrgram)
 
+library(mlbench)
+library(caret)
+library(dotwhisker)
+
 # Define server logic required to draw a histogram
 server <- function(input, output,session) {
   shinyjs::hide(id = "Country2")
@@ -37,7 +41,13 @@ server <- function(input, output,session) {
     input$Compare
   })
   
-
+  model <- reactive({
+    y = input$Y
+    lab <- allData[,c(y)]
+    fit <- lm(lab ~ ., data=trainingData)
+  })
+  
+  
   health <-reactive({
     
     input$Health
@@ -51,6 +61,17 @@ server <- function(input, output,session) {
     input$levelCorr
   })
   
+  var1 <- reactive({
+    input$variable1
+  })
+  
+  var2 <- reactive({
+    input$variable2
+  })
+  
+  var3 <- reactive({
+    input$variable3
+  })
   
   
   observeEvent(input$Compare, {
@@ -67,15 +88,18 @@ server <- function(input, output,session) {
   
   observeEvent(input$tabCorr, {
     
-    if(input$tabCorr == "Explanation"){
-      shinyjs::hide(id = "levelCorr")
-      shinyjs::show(id = "variable1")
-      shinyjs::show(id = "variable2")
-      
-    }else{
+    if(input$tabCorr == "Global Correlations"){
       shinyjs::show(id = "levelCorr")
       shinyjs::hide(id = "variable1")
       shinyjs::hide(id = "variable2")
+      shinyjs::hide(id = "variable3")
+
+      
+    }else{
+      shinyjs::hide(id = "levelCorr")
+      shinyjs::show(id = "variable1")
+      shinyjs::show(id = "variable2")
+      shinyjs::show(id = "variable3")
     }
     
     
@@ -209,42 +233,56 @@ server <- function(input, output,session) {
   observe({
     output$plotChord <- renderChorddiag({
 
-      
-      matriz<-cor(g)
-      matrizAbs<-abs(matriz)
-      matrizAbs[matrizAbs<as.numeric(minCorr())]=0
-      dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
-      matrizAbs
-      chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
-      
-      
+       matriz<-cor(g)
+       matrizAbs<-abs(matriz)
+       matrizAbs[matrizAbs<as.numeric(minCorr())]=0
+       dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
+       matrizAbs
+       chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
+
     })
-    
+
   })
   observe({
     output$corrplot <- renderPlot({
-      
-      df <- selectedCols[, c(input$variable1, input$variable2, 'U5.Population.1000')]
-      ggpairs(df, title="Correlogram of different variables with under 5 population")
-      
+      df <- selectedCols[, c(var1(), var2(), var3(), 'U5.Population.1000')]
+      df[is.na(df)] <- 0
+      ggpairs(df)
     })
-    
-  })
-  
-  observe({
+
     output$colorcorr <- renderPlot({
-      
-      df <- selectedCols[, c(input$variable1, input$variable2, 'U5.Population.1000')]
+      df <- selectedCols[, c(var1(),var2(), var3(), 'U5.Population.1000')]
       ggcorr(df, low = "#3B9AB2", mid = "lightgrey", high = "#F21A00", nbreaks = 15)
     })
-    
+
   })
   
-  
+  #Regression Plot
+  observe({
+    output$summary <- renderPrint({
+      summary(model())
+      
+    })
+    output$lrPlot <- renderPlot({
+      plot(model(), which=1)
+    })
+    
+    output$qqPlot <- renderPlot({
+      plot(model(), which=2)
+    })
+    
+    output$densityPlot <- renderPlot({
+      res <- resid(model())
+      plot(density(res))
+    })
+    
+    output$coffPlot <- renderPlot({
+      dwplot(model())
+    })
+    
 
+  })
 
-  
-  
   
   #3º
   observe({

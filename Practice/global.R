@@ -6,8 +6,11 @@ library(tools)
 library(shinycssloaders)
 library(factoextra)
 library("VennDiagram") 
+
 library(devtools)
 library(chorddiag)
+
+
 #1 PLOT
 data1 <- read.csv("malnutrition-estimates.csv")
 data2 <- read.csv("country-wise-average.csv")
@@ -73,7 +76,25 @@ selectedCols = data2
 selectedCols <- selectedCols[,c(2,3,4,5,6,7,8)] 
 reqCols <- colnames(selectedCols)
 
+#REGRESSION PLOT 
 
+encode_ordinal <- function(x, order = unique(x)) {
+  x <- as.numeric(factor(x, levels = order, exclude = NULL))
+  x
+}
+allData <- read.csv(file="~/Desktop/BD2/shini_malnutrition/Practice/malnutrition-estimates.csv")
+allData[["Country_encoded"]] <- encode_ordinal(allData[["Country"]])
+allData[["Year_encoded"]] <- encode_ordinal(allData[["Year"]])
+allData[is.na(allData)] <- 0
+trainingData <- allData[, c(6,7,8,9,10,20,21,22)]
+trainingData[] <- lapply(trainingData, function(x) {
+  if(is.factor(x)) as.numeric(as.character(x)) else x
+})
+sapply(trainingData, class)
+trainingData$Survey.Sample..N. <- as.numeric(gsub(",","",trainingData$Survey.Sample..N.))
+trainingData[is.na(trainingData)] <- 0
+allCols <- colnames(allData)
+yCols <- allCols[11:15]
 
 #3º
 incomes= c('Low income','Lower middle income', 'Upper middle income', 'High income')

@@ -71,21 +71,47 @@ ui <- fluidPage(
                                       choices = reqCols
                           ), 
                           
-                         sliderInput("levelCorr", "Minimum correlation value", min = 0, max = 1, value = 0, animate = 
-                                       animationOptions(interval = 100, loop = FALSE, playButton = NULL, pauseButton = NULL),)
-                         
+                          selectInput("variable3", "Variable 3",
+                                      choices = reqCols
+                          ),
                           
+                         sliderInput("levelCorr", "Minimum correlation value", min = 0, max = 1, value = 0, animate =
+                                       animationOptions(interval = 100, loop = FALSE, playButton = NULL, pauseButton = NULL),)
                           
                         ),
                         mainPanel(
-                          
+
 
                           tabsetPanel(
                             tabPanel("Global Correlations",chorddiagOutput('plotChord', height = '500')),
-                            tabPanel("Explanation" , plotOutput("corrplot"),
-                                     plotOutput("colorcorr")),
-                           
-                            id ="tabCorr")
+                            tabPanel("U5 population vs others Plot", plotOutput("corrplot"),),
+                            tabPanel("Correlation HeatMap", plotOutput("colorcorr")),
+
+                            id ="tabCorr"),
+
+
+                        ),
+                        fluid = TRUE) 
+                      
+             ),
+             tabPanel("Linear Regression",
+                      sidebarLayout(
+                        sidebarPanel(
+
+                          selectInput("Y", "Type of Malnutrition",
+                                      choices = yCols
+                          ),
+                        ),
+
+                        mainPanel(
+                          tabsetPanel(
+                            tabPanel("Summary", verbatimTextOutput("summary")),
+                            tabPanel("Residual vs Fitted Plot", plotOutput("lrPlot")),
+                            tabPanel("Q-Q Plot", plotOutput("qqPlot")),
+                            tabPanel("Density Plot", plotOutput("densityPlot")),
+                            tabPanel("Coefficient Plot", plotOutput("coffPlot"))
+                          )
+                          
                         ),
                         fluid = TRUE) 
                       
