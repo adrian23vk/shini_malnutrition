@@ -9,7 +9,8 @@ library("VennDiagram")
 library(DT) 
 library(bslib)
 library(leaflet)
-
+devtools::install_github("hrbrmstr/taucharts")
+library(taucharts)
 library(devtools)
 library(chorddiag)
 

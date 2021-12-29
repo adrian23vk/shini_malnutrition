@@ -9,13 +9,14 @@ library("rnaturalearthdata")
 library(sf)
 library(tmap)  
 library(XML)
-
+library(scatterD3)
+library(taucharts)
 library(maps)
 library(leaflet)
 
 library(GGally)
 library(corrgram)
-
+library(plotly)
 library(mlbench)
 library(caret)
 library(dotwhisker)
@@ -244,13 +245,27 @@ server <- function(input, output,session) {
 
   })
   observe({
-    output$corrplot <- renderPlot({
+    output$corrplot <- renderScatterD3({
       df <- selectedCols[, c(var1(), var2(), var3(), 'U5.Population.1000')]
-      df[is.na(df)] <- mean(df)
-      
-     plott = ggplot(df, aes(x=df[,1], y = df[,4], size = df[,2] , color = df[,3]))  +
-        geom_point(alpha=0.7)
-     plott + labs(colour = var3(), x = var1(), y = 'U5.Population.1000', size = var2())
+      df[is.na(df)] <- 0
+      # df %>% mutate(text = paste("\n", var1(),": ", df[,1],
+      #                            "\n", var2(),": ", df[,2],
+      #                            "\n", var3(),": ", df[,3],
+      #                            "\nU5.Population.1000: ", df[,4], sep=""))
+      #   
+    
+      # tauchart(df) %>% 
+      #   tau_point(var1(), 'U5.Population.1000',color =  var2(), size = var3()) %>%
+      #   tau_legend() %>%
+      #   tau_tooltip() 
+      scatterD3(x=df[,1], y = df[,4], size_var = df[,2] , size_lab = var2(),col_lab =var3(), col_var = df[,3],
+                left_margin = 80 , xlab = var1(), ylab = 'U5.Population.1000')
+      # 
+      #  gg <- ggplot(df, aes(x=df[,1], y = df[,4], size = df[,2] , color = df[,3]))  +
+      #    geom_point(alpha=0.7)+ labs(colour = var3(), x = var1(), y = 'U5.Population.1000', size = var2()) +
+      #   scale_size(range = c(3, 12))
+      # as_tauchart(gg)
+     
      # ggpairs(df)
     })
 
