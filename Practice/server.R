@@ -292,7 +292,13 @@ server <- function(input, output,session) {
     })
     output$tabla<- DT::renderDataTable({
       table= getTabla(income(),health())
-      DT::datatable(table,)
+      DT::datatable(table) %>% formatStyle(
+        'Income', backgroundColor = '#BBFAEF'
+        ) %>% formatStyle(
+        'Health', backgroundColor = '#FAF3B9'
+      ) %>% formatStyle(
+        'Intersection', backgroundColor = '#C4FAB8'
+      )
     })
 
     

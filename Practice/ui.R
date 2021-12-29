@@ -94,6 +94,30 @@ ui <- fluidPage(
                         fluid = TRUE) 
                       
              ),
+             tabPanel("Wealth related to the malnutrition level",
+                      
+                      sidebarLayout(
+                        sidebarPanel(
+                          
+                          selectInput("Income", "Income", choices = incomes),
+                          
+                          selectInput("Health", "Heath", choices = health)
+                        ),
+                        mainPanel(
+                          tabsetPanel(
+                            tabPanel("Plot", plotOutput("venn")),
+                            tabPanel("Extra",DT::dataTableOutput('tabla'))
+                            
+                            
+                            
+                          )
+                          
+                        ),
+                        
+                        
+                      )
+                      
+             ) ,
              tabPanel("Linear Regression",
                       sidebarLayout(
                         sidebarPanel(
@@ -115,31 +139,8 @@ ui <- fluidPage(
                         ),
                         fluid = TRUE) 
                       
-             ),
-             tabPanel("Malnutrition vs wealth",
-               
-               sidebarLayout(
-                 sidebarPanel(
-                   
-                   selectInput("Income", "Income", choices = incomes),
-                 
-                   selectInput("Health", "Heath", choices = health)
-                 ),
-                 mainPanel(
-                   tabsetPanel(
-                     tabPanel("Plot", plotOutput("venn")),
-                     tabPanel("Extra",DT::dataTableOutput('tabla'))
-                    
-
-
-                   )
-
-                 ),
-                 
-                 
-               )
+             )
              
-             ) 
              
     )
   
