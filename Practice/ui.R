@@ -128,7 +128,7 @@ ui <- fluidPage(
                  mainPanel(
                    tabsetPanel(
                      tabPanel("Plot", plotOutput("venn")),
-                     tabPanel("Extra", plotOutput("extra")),
+                     tabPanel("Extra",DT::dataTableOutput('tabla'))
                     
 
 

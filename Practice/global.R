@@ -6,6 +6,7 @@ library(tools)
 library(shinycssloaders)
 library(factoextra)
 library("VennDiagram") 
+library(DT) 
 
 library(devtools)
 library(chorddiag)
@@ -82,7 +83,7 @@ encode_ordinal <- function(x, order = unique(x)) {
   x <- as.numeric(factor(x, levels = order, exclude = NULL))
   x
 }
-allData <- read.csv(file="~/Desktop/BD2/shini_malnutrition/Practice/malnutrition-estimates.csv")
+allData <- read.csv(file="malnutrition-estimates.csv")
 allData[["Country_encoded"]] <- encode_ordinal(allData[["Country"]])
 allData[["Year_encoded"]] <- encode_ordinal(allData[["Year"]])
 allData[is.na(allData)] <- 0
@@ -137,7 +138,7 @@ datos3$heal = columnKmeans$ord
 library("ggvenn")
 getVenn <- function(incomeX, health)
 {
-  d=datos3
+  
   income=traductorIncome(incomeX)
   
   lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
@@ -157,6 +158,16 @@ getVenn <- function(incomeX, health)
                      ,cex = 2
                      ,cat.pos = 0
                      ,print.mode = c("raw","percent"))
+}
+getTabla <-function(incomeX, health)
+{
+  income=traductorIncome(incomeX)
+  
+  lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
+               Merged=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
+  mat =as.matrix(lista)
+
+  return(as.data.frame( mat))
 }
 traductorIncome <-function(income)
 {
