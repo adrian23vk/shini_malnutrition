@@ -1,6 +1,7 @@
-library(leaflet)
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+  theme= bs_theme(version = 5,bootswatch = 'flatly'),
+  
   useShinyjs(),
   # Application title
   titlePanel("Malnutrition summary"),
@@ -12,15 +13,17 @@ ui <- fluidPage(
                       tags$style("
         #controls {
           opacity: 0.8;
+          background-color: rgba(255,255,255,1);
         }
         #controls:hover{
           opacity: 1;
+          background-color: rgba(255,255,255,1);
         }
                "),
                       leafletOutput("mapplot",height  = '100%')%>% withSpinner(),
                       
-                      absolutePanel(id='controls',height = "auto",width = 300,bottom = "auto",right = 40, fixed = TRUE,top = 150,
-                                    class = "panel panel-default",
+                      fixedPanel(id='controls',height = "auto",width = 300,bottom = "auto",right = 40,top = 152,
+                                    class='panel panel-default',
                                   
                         
                           
