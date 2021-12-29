@@ -165,7 +165,9 @@ getTabla <-function(incomeX, health)
   
   lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
                Merged=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
-  mat =as.matrix(lista)
+  max_length <- max(unlist(lapply (lista, FUN = length)))
+  mat <- sapply (lista, function (x) {length (x) <- max_length; return (x)})
+  mat =as.matrix(mat)
 
   return(as.data.frame( mat))
 }

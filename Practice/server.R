@@ -292,7 +292,7 @@ server <- function(input, output,session) {
     })
     output$tabla<- DT::renderDataTable({
       table= getTabla(income(),health())
-      DT::datatable(table)
+      DT::datatable(table,)
     })
 
     
