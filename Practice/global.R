@@ -7,6 +7,8 @@ library(shinycssloaders)
 library(factoextra)
 library("VennDiagram") 
 library(DT) 
+library(bslib)
+library(leaflet)
 
 library(devtools)
 library(chorddiag)
