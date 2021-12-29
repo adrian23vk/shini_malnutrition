@@ -246,8 +246,12 @@ server <- function(input, output,session) {
   observe({
     output$corrplot <- renderPlot({
       df <- selectedCols[, c(var1(), var2(), var3(), 'U5.Population.1000')]
-      df[is.na(df)] <- 0
-      ggpairs(df)
+      df[is.na(df)] <- mean(df)
+      
+     plott = ggplot(df, aes(x=df[,1], y = df[,4], size = df[,2] , color = df[,3]))  +
+        geom_point(alpha=0.7)
+     plott + labs(colour = var3(), x = var1(), y = 'U5.Population.1000', size = var2())
+     # ggpairs(df)
     })
 
     output$colorcorr <- renderPlot({
