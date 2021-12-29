@@ -74,7 +74,7 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 #PLOT 3
 
 selectedCols = data2
-selectedCols <- selectedCols[,c(2,3,4,5,6,7,8)] 
+selectedCols <- selectedCols[,c(3,4,5,6,7,8)] 
 reqCols <- colnames(selectedCols)
 
 #REGRESSION PLOT 

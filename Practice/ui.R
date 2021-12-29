@@ -59,7 +59,7 @@ ui <- fluidPage(
                       fluid = TRUE) 
                       
              ),
-             tabPanel("Correlograms",
+             tabPanel("Correlations among malnutrition types",
                       sidebarLayout(
                         sidebarPanel(
                           
@@ -94,6 +94,7 @@ ui <- fluidPage(
                         fluid = TRUE) 
                       
              ),
+             
              tabPanel("Wealth related to the malnutrition level",
                       
                       sidebarLayout(
@@ -105,19 +106,15 @@ ui <- fluidPage(
                         ),
                         mainPanel(
                           tabsetPanel(
-                            tabPanel("Plot", plotOutput("venn")),
-                            tabPanel("Extra",DT::dataTableOutput('tabla'))
-                            
-                            
+                            tabPanel("Venn diagram", plotOutput("venn")),
+                            tabPanel("Country details",DT::dataTableOutput('tabla'))
                             
                           )
-                          
                         ),
-                        
+                        fluid = TRUE
                         
                       )
-                      
-             ) ,
+             ),
              tabPanel("Linear Regression",
                       sidebarLayout(
                         sidebarPanel(
@@ -140,6 +137,7 @@ ui <- fluidPage(
                         fluid = TRUE) 
                       
              )
+             
              
              
     )
