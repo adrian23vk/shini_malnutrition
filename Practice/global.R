@@ -9,7 +9,7 @@ library("VennDiagram")
 library(DT) 
 library(bslib)
 library(leaflet)
-devtools::install_github("hrbrmstr/taucharts")
+
 library(taucharts)
 library(devtools)
 library(chorddiag)
@@ -76,8 +76,8 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 #PLOT 3
 
-selectedCols = data2
-selectedCols <- selectedCols[,c(3,4,5,6,7,8)] 
+DataCopied2 = data2
+selectedCols <- DataCopied2[,c(3,4,5,6,7)] 
 reqCols <- colnames(selectedCols)
 
 #REGRESSION PLOT 

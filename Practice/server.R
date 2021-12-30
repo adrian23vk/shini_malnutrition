@@ -230,7 +230,7 @@ server <- function(input, output,session) {
 
   })
   
-  #HamnaPlot
+ 
   observe({
     output$plotChord <- renderChorddiag({
 
@@ -246,18 +246,15 @@ server <- function(input, output,session) {
   })
   observe({
     output$corrplot <- renderScatterD3({
-      df <- selectedCols[, c(var1(), var2(), var3(), 'U5.Population.1000')]
+      target = DataCopied2[,'U5.Population.1000']
+      df <- selectedCols[, c(var1(), var2(), var3())]
+      df$U5.Population.1000 <- target
+     
+      df[,1][is.na( df[,1])] <- mean( df[,1])
+      df[,2][is.na( df[,2])] <- mean( df[,2])
+      df[,3][is.na( df[,3])] <- mean( df[,3])
+      df[,4][is.na( df[,4])] <- mean( df[,4])
       df[is.na(df)] <- 0
-      # df %>% mutate(text = paste("\n", var1(),": ", df[,1],
-      #                            "\n", var2(),": ", df[,2],
-      #                            "\n", var3(),": ", df[,3],
-      #                            "\nU5.Population.1000: ", df[,4], sep=""))
-      #   
-    
-      # tauchart(df) %>% 
-      #   tau_point(var1(), 'U5.Population.1000',color =  var2(), size = var3()) %>%
-      #   tau_legend() %>%
-      #   tau_tooltip() 
       scatterD3(x=df[,1], y = df[,4], size_var = df[,2] , size_lab = var2(),col_lab =var3(), col_var = df[,3],
                 left_margin = 80 , xlab = var1(), ylab = 'U5.Population.1000')
       # 
