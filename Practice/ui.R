@@ -67,27 +67,27 @@ ui <- fluidPage(
                         sidebarPanel(
                           
                           selectInput("variable1", "Variable 1",
-                                      choices = reqCols
+                                      choices = reqCols1
                           ),
                           
                           selectInput("variable2", "Variable 2",
-                                      choices = reqCols
+                                      choices = reqCols1
                           ), 
                           
                           selectInput("variable3", "Variable 3",
-                                      choices = reqCols
+                                      choices = reqCols1
                           ),
                           
                          sliderInput("levelCorr", "Minimum correlation value", min = 0, max = 1, value = 0, animate =
-                                       animationOptions(interval = 100, loop = FALSE, playButton = NULL, pauseButton = NULL),)
+                                       animationOptions(interval = 100, loop = FALSE, playButton = NULL, pauseButton = NULL))
                           
                         ),
                         mainPanel(
 
 
                           tabsetPanel(
-                            tabPanel("Global Correlations", chorddiagOutput('plotChord', height = '500')),
-                            tabPanel("U5 population vs others Plot", scatterD3Output("corrplot")),
+                            tabPanel("Global Correlations", chorddiag::chorddiagOutput('plotChord', height = '500')),
+                            tabPanel("U5 population vs others Plot", ggiraph::girafeOutput('corrplot')),
                             tabPanel("Correlation HeatMap", plotOutput("colorcorr")),
 
                             id ="tabCorr"),

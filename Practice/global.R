@@ -13,7 +13,7 @@ library(leaflet)
 library(scatterD3)
 library(scatterplot3d)
 library(devtools)
-library(chorddiag)
+
 
 
 #1 PLOT
@@ -76,17 +76,33 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 
 #PLOT 3
+#plot corr
 
+g<-data2[,c(3,4,5,6,7)]
+
+g$Severe.Wasting[is.na(g$Severe.Wasting)]<-mean(g$Severe.Wasting,na.rm = TRUE)
+g$Wasting[is.na(g$Wasting)]<-mean(g$Wasting, na.rm = TRUE)
+g$Overweight[is.na(g$Overweight)]<-mean(g$Overweight, na.rm = TRUE)
+g$Stunting[is.na(g$Stunting)]<-mean(g$Stunting, na.rm = TRUE)
+g$Underweight[is.na(g$Underweight)]<-mean(g$Underweight, na.rm = TRUE)
 
 DataCopied2 <- data2
-selectedCols <- DataCopied2[,c(3,4,5,6,7)] 
-selectedCols$Severe.Wasting[is.na(selectedCols$Severe.Wasting)]<-mean(selectedCols$Severe.Wasting,na.rm = TRUE)
-selectedCols$Wasting[is.na(selectedCols$Wasting)]<-mean(selectedCols$Wasting, na.rm = TRUE)
-selectedCols$Overweight[is.na(selectedCols$Overweight)]<-mean(selectedCols$Overweight, na.rm = TRUE)
-selectedCols$Stunting[is.na(selectedCols$Stunting)]<-mean(selectedCols$Stunting, na.rm = TRUE)
-selectedCols$Underweight[is.na(selectedCols$Underweight)]<-mean(selectedCols$Underweight, na.rm = TRUE)
+selectedCols1 <- DataCopied2[,c(3,4,5,6,7)] 
+selectedCols1$Severe.Wasting[is.na(selectedCols1$Severe.Wasting)]<-mean(selectedCols1$Severe.Wasting,na.rm = TRUE)
+selectedCols1$Wasting[is.na(selectedCols1$Wasting)]<-mean(selectedCols1$Wasting, na.rm = TRUE)
+selectedCols1$Overweight[is.na(selectedCols1$Overweight)]<-mean(selectedCols1$Overweight, na.rm = TRUE)
+selectedCols1$Stunting[is.na(selectedCols1$Stunting)]<-mean(selectedCols1$Stunting, na.rm = TRUE)
+selectedCols1$Underweight[is.na(selectedCols1$Underweight)]<-mean(selectedCols1$Underweight, na.rm = TRUE)
 
-reqCols <- colnames(selectedCols)
+DataCopied3 <- data2
+selectedCols2 <- DataCopied3[,c(3,4,5,6,7)] 
+selectedCols2$Severe.Wasting[is.na(selectedCols2$Severe.Wasting)]<-mean(selectedCols2$Severe.Wasting,na.rm = TRUE)
+selectedCols2$Wasting[is.na(selectedCols2$Wasting)]<-mean(selectedCols2$Wasting, na.rm = TRUE)
+selectedCols2$Overweight[is.na(selectedCols2$Overweight)]<-mean(selectedCols2$Overweight, na.rm = TRUE)
+selectedCols2$Stunting[is.na(selectedCols2$Stunting)]<-mean(selectedCols2$Stunting, na.rm = TRUE)
+selectedCols2$Underweight[is.na(selectedCols2$Underweight)]<-mean(selectedCols2$Underweight, na.rm = TRUE)
+
+reqCols1 <- colnames(selectedCols1)
 
 #REGRESSION PLOT 
 
@@ -193,13 +209,5 @@ traductorIncome <-function(income)
 }
 
 
-#plot corr
 
-g<-data2[,c(3,4,5,6,7)]
-
-g$Severe.Wasting[is.na(g$Severe.Wasting)]<-mean(g$Severe.Wasting,na.rm = TRUE)
-g$Wasting[is.na(g$Wasting)]<-mean(g$Wasting, na.rm = TRUE)
-g$Overweight[is.na(g$Overweight)]<-mean(g$Overweight, na.rm = TRUE)
-g$Stunting[is.na(g$Stunting)]<-mean(g$Stunting, na.rm = TRUE)
-g$Underweight[is.na(g$Underweight)]<-mean(g$Underweight, na.rm = TRUE)
 

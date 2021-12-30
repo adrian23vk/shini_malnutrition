@@ -10,10 +10,10 @@ library(sf)
 library(tmap)  
 library(XML)
 library(scatterD3)
-
-library(scatterplot3d)
+library(chorddiag)
 library(maps)
 library(leaflet)
+library(ggiraph)
 
 library(GGally)
 library(corrgram)
@@ -233,39 +233,53 @@ server <- function(input, output,session) {
   
  
   observe({
-    output$plotChord <- renderChorddiag({
+    output$plotChord <- chorddiag::renderChorddiag({
 
        matriz<-cor(g)
        matrizAbs<-abs(matriz)
        matrizAbs[matrizAbs<as.numeric(minCorr())]=0
        dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
-       chorddiag(data= matrizAbs,groupnameFontsize = 14)
-       
+       chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
+
     })
 
   })
+  
   observe({
-    output$corrplot <- renderScatterD3({
-      target = DataCopied2[,'U5.Population.1000']
-      df <- selectedCols[, c(var1(), var2(), var3())]
-      df$U5.Population.1000 <- target
-     
-      scatterD3(x=df[,1], y = df[,4], size_var = df[,2] , size_lab = var2(),col_lab =var3(), col_var = df[,3],
-                left_margin = 80 , xlab = var1(), ylab = 'U5.Population.1000')
+    output$corrplot <-renderGirafe({
+      target1 = DataCopied2[,'U5.Population.1000']
+      countrydf1 = DataCopied2[,'Country']
+      df1 <- selectedCols1[, c(var1(), var2(), var3())]
+      df1$U5.Population.1000 <- target1
+      df1$Country <- countrydf1
+
       # 
-      #  gg <- ggplot(df, aes(x=df[,1], y = df[,4], size = df[,2] , color = df[,3]))  +
-      #    geom_point(alpha=0.7)+ labs(colour = var3(), x = var1(), y = 'U5.Population.1000', size = var2()) +
-      #   scale_size(range = c(3, 12))
+      # scatterD3::scatterD3(x=df1[,1], y = df1[,4], size_var = df1[,2] , size_lab = var2(),col_lab =var3(), col_var = df1[,3],
+      #           left_margin = 80 , xlab = var1(), ylab = 'U5.Population.1000')
+      # 
+       gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
+         geom_point_interactive(alpha=0.7)+ labs(colour = var3(), x = var1(), y = 'U5.Population.1000', size = var2()) +
+        scale_size(range = c(3, 12)) + geom_point_interactive(aes(tooltip = Country)) + 
+         scale_colour_gradient(low = "springgreen", high = "royalblue") 
+       
+      giraf = girafe(ggobj  = gg,  width_svg = 12, height_svg = 6)
+      giraf <- girafe_options(giraf,
+                              opts_zoom(max = 20) )
+      giraf <- girafe_options(giraf,
+                               opts_tooltip(opacity = .7,
+                                            offx = 20, offy = -10,
+                                            use_fill = TRUE, use_stroke = TRUE, 
+                                            delay_mouseout = 1000) )
       # as_tauchart(gg)
      
      # ggpairs(df)
     })
 
     output$colorcorr <- renderPlot({
-      target = DataCopied2[,'U5.Population.1000']
-      df <- selectedCols[, c(var1(), var2(), var3())]
-      df$U5.Population.1000 <- target
-      ggcorr(df, low = "#3B9AB2", mid = "lightgrey", high = "#F21A00", nbreaks = 15)
+      target2 = DataCopied3[,'U5.Population.1000']
+      df2 <- selectedCols2[, c(var1(), var2(), var3())]
+      df2$U5.Population.1000 <- target2
+      ggcorr(df2, low = "#3B9AB2", mid = "lightgrey", high = "#F21A00", nbreaks = 15)
     })
 
   })
