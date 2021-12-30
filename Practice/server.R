@@ -9,8 +9,9 @@ library("rnaturalearthdata")
 library(sf)
 library(tmap)  
 library(XML)
-library(scatterD3)
+
 library(chorddiag)
+
 library(maps)
 library(leaflet)
 library(ggiraph)
@@ -253,16 +254,13 @@ server <- function(input, output,session) {
       df1$U5.Population.1000 <- target1
       df1$Country <- countrydf1
 
-      # 
-      # scatterD3::scatterD3(x=df1[,1], y = df1[,4], size_var = df1[,2] , size_lab = var2(),col_lab =var3(), col_var = df1[,3],
-      #           left_margin = 80 , xlab = var1(), ylab = 'U5.Population.1000')
-      # 
        gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
          geom_point_interactive(alpha=0.7)+ labs(colour = var3(), x = var1(), y = 'U5.Population.1000', size = var2()) +
         scale_size(range = c(3, 12)) + geom_point_interactive(aes(tooltip = Country)) + 
          scale_colour_gradient(low = "springgreen", high = "royalblue") 
        
-      giraf = girafe(ggobj  = gg,  width_svg = 12, height_svg = 6)
+      giraf = girafe(ggobj  = gg,  width_svg = 12, height_svg = 6)%>% 
+        girafe_options(opts_hover(css = "fill:cyan;"))
       giraf <- girafe_options(giraf,
                               opts_zoom(max = 20) )
       giraf <- girafe_options(giraf,
