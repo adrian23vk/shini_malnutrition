@@ -238,9 +238,8 @@ server <- function(input, output,session) {
        matrizAbs<-abs(matriz)
        matrizAbs[matrizAbs<as.numeric(minCorr())]=0
        dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
-       matrizAbs
        chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
-
+       
     })
 
   })
@@ -262,7 +261,9 @@ server <- function(input, output,session) {
     })
 
     output$colorcorr <- renderPlot({
-      df <- selectedCols[, c(var1(),var2(), var3(), 'U5.Population.1000')]
+      target = DataCopied2[,'U5.Population.1000']
+      df <- selectedCols[, c(var1(), var2(), var3())]
+      df$U5.Population.1000 <- target
       ggcorr(df, low = "#3B9AB2", mid = "lightgrey", high = "#F21A00", nbreaks = 15)
     })
 

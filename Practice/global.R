@@ -77,7 +77,7 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 #PLOT 3
 
-DataCopied2 = data2
+DataCopied2 <- data2
 selectedCols <- DataCopied2[,c(3,4,5,6,7)] 
 selectedCols$Severe.Wasting[is.na(selectedCols$Severe.Wasting)]<-mean(selectedCols$Severe.Wasting,na.rm = TRUE)
 selectedCols$Wasting[is.na(selectedCols$Wasting)]<-mean(selectedCols$Wasting, na.rm = TRUE)
