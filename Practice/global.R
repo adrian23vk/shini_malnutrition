@@ -77,6 +77,7 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 #PLOT 3
 
+
 DataCopied2 <- data2
 selectedCols <- DataCopied2[,c(3,4,5,6,7)] 
 selectedCols$Severe.Wasting[is.na(selectedCols$Severe.Wasting)]<-mean(selectedCols$Severe.Wasting,na.rm = TRUE)
@@ -84,6 +85,7 @@ selectedCols$Wasting[is.na(selectedCols$Wasting)]<-mean(selectedCols$Wasting, na
 selectedCols$Overweight[is.na(selectedCols$Overweight)]<-mean(selectedCols$Overweight, na.rm = TRUE)
 selectedCols$Stunting[is.na(selectedCols$Stunting)]<-mean(selectedCols$Stunting, na.rm = TRUE)
 selectedCols$Underweight[is.na(selectedCols$Underweight)]<-mean(selectedCols$Underweight, na.rm = TRUE)
+
 reqCols <- colnames(selectedCols)
 
 #REGRESSION PLOT 
@@ -151,7 +153,7 @@ getVenn <- function(incomeX, health)
   income=traductorIncome(incomeX)
   
   lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
-               Intersection=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
+               Merged=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
   # ggvenn(data = lista,
   #        columns = c('Income','Health') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
   
@@ -160,7 +162,7 @@ getVenn <- function(incomeX, health)
   draw.pairwise.venn(area1 = counter[1],                        # Create pairwise venn diagram
                      area2 = counter[2],
                      cross.area = counter[3]
-                     ,fill=c('#71FAEF', '#FAF35F')
+                     ,fill=c('deepskyblue', 'red')
                      ,lty = "blank"
                      ,category = c("Income", "Health")
                      ,cat.cex = 2
@@ -173,7 +175,7 @@ getTabla <-function(incomeX, health)
   income=traductorIncome(incomeX)
   
   lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
-               Intersection=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
+               Merged=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
   max_length <- max(unlist(lapply (lista, FUN = length)))
   mat <- sapply (lista, function (x) {length (x) <- max_length; return (x)})
   mat =as.matrix(mat)
