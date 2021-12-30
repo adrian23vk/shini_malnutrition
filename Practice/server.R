@@ -10,7 +10,7 @@ library(sf)
 library(tmap)  
 library(XML)
 library(scatterD3)
-library(taucharts)
+library(scatterplot3d)
 library(maps)
 library(leaflet)
 
@@ -250,11 +250,6 @@ server <- function(input, output,session) {
       df <- selectedCols[, c(var1(), var2(), var3())]
       df$U5.Population.1000 <- target
      
-      df[,1][is.na( df[,1])] <- mean( df[,1])
-      df[,2][is.na( df[,2])] <- mean( df[,2])
-      df[,3][is.na( df[,3])] <- mean( df[,3])
-      df[,4][is.na( df[,4])] <- mean( df[,4])
-      df[is.na(df)] <- 0
       scatterD3(x=df[,1], y = df[,4], size_var = df[,2] , size_lab = var2(),col_lab =var3(), col_var = df[,3],
                 left_margin = 80 , xlab = var1(), ylab = 'U5.Population.1000')
       # 
