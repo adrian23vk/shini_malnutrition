@@ -10,10 +10,8 @@ library(sf)
 library(tmap)  
 library(XML)
 library(scatterD3)
-<<<<<<< HEAD
-=======
+
 library(scatterplot3d)
->>>>>>> c8a41d8f6f5707eb79cedf52dcfaf3839a10ccec
 library(maps)
 library(leaflet)
 
