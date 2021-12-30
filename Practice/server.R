@@ -10,6 +10,10 @@ library(sf)
 library(tmap)  
 library(XML)
 library(scatterD3)
+<<<<<<< HEAD
+=======
+library(scatterplot3d)
+>>>>>>> c8a41d8f6f5707eb79cedf52dcfaf3839a10ccec
 library(maps)
 library(leaflet)
 
@@ -237,9 +241,8 @@ server <- function(input, output,session) {
        matrizAbs<-abs(matriz)
        matrizAbs[matrizAbs<as.numeric(minCorr())]=0
        dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
-       matrizAbs
        chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
-
+       
     })
 
   })
@@ -249,11 +252,6 @@ server <- function(input, output,session) {
       df <- selectedCols[, c(var1(), var2(), var3())]
       df$U5.Population.1000 <- target
      
-      df[,1][is.na( df[,1])] <- mean( df[,1])
-      df[,2][is.na( df[,2])] <- mean( df[,2])
-      df[,3][is.na( df[,3])] <- mean( df[,3])
-      df[,4][is.na( df[,4])] <- mean( df[,4])
-      df[is.na(df)] <- 0
       scatterD3(x=df[,1], y = df[,4], size_var = df[,2] , size_lab = var2(),col_lab =var3(), col_var = df[,3],
                 left_margin = 80 , xlab = var1(), ylab = 'U5.Population.1000')
       # 
@@ -266,7 +264,9 @@ server <- function(input, output,session) {
     })
 
     output$colorcorr <- renderPlot({
-      df <- selectedCols[, c(var1(),var2(), var3(), 'U5.Population.1000')]
+      target = DataCopied2[,'U5.Population.1000']
+      df <- selectedCols[, c(var1(), var2(), var3())]
+      df$U5.Population.1000 <- target
       ggcorr(df, low = "#3B9AB2", mid = "lightgrey", high = "#F21A00", nbreaks = 15)
     })
 

@@ -10,6 +10,8 @@ library(DT)
 library(bslib)
 library(leaflet)
 
+library(scatterD3)
+library(scatterplot3d)
 library(devtools)
 library(chorddiag)
 
@@ -75,8 +77,15 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 #PLOT 3
 
-selectedCols = data2
-selectedCols <- selectedCols[,c(2,3,4,5,6,7,8)] 
+
+DataCopied2 <- data2
+selectedCols <- DataCopied2[,c(3,4,5,6,7)] 
+selectedCols$Severe.Wasting[is.na(selectedCols$Severe.Wasting)]<-mean(selectedCols$Severe.Wasting,na.rm = TRUE)
+selectedCols$Wasting[is.na(selectedCols$Wasting)]<-mean(selectedCols$Wasting, na.rm = TRUE)
+selectedCols$Overweight[is.na(selectedCols$Overweight)]<-mean(selectedCols$Overweight, na.rm = TRUE)
+selectedCols$Stunting[is.na(selectedCols$Stunting)]<-mean(selectedCols$Stunting, na.rm = TRUE)
+selectedCols$Underweight[is.na(selectedCols$Underweight)]<-mean(selectedCols$Underweight, na.rm = TRUE)
+
 reqCols <- colnames(selectedCols)
 
 #REGRESSION PLOT 
