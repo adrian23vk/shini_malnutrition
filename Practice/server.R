@@ -238,7 +238,7 @@ server <- function(input, output,session) {
        matrizAbs<-abs(matriz)
        matrizAbs[matrizAbs<as.numeric(minCorr())]=0
        dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
-       chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
+       chorddiag(data= matrizAbs,groupnameFontsize = 14)
        
     })
 
