@@ -10,7 +10,6 @@ library(DT)
 library(bslib)
 library(leaflet)
 
-library(taucharts)
 library(devtools)
 library(chorddiag)
 
@@ -76,8 +75,8 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 
 #PLOT 3
 
-DataCopied2 = data2
-selectedCols <- DataCopied2[,c(3,4,5,6,7)] 
+selectedCols = data2
+selectedCols <- selectedCols[,c(2,3,4,5,6,7,8)] 
 reqCols <- colnames(selectedCols)
 
 #REGRESSION PLOT 
@@ -145,7 +144,7 @@ getVenn <- function(incomeX, health)
   income=traductorIncome(incomeX)
   
   lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
-               Intersection=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
+               Merged=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
   # ggvenn(data = lista,
   #        columns = c('Income','Health') , fill_alpha = 0.5, fill_color = c('deepskyblue', 'yellow'))
   
@@ -154,7 +153,7 @@ getVenn <- function(incomeX, health)
   draw.pairwise.venn(area1 = counter[1],                        # Create pairwise venn diagram
                      area2 = counter[2],
                      cross.area = counter[3]
-                     ,fill=c('#71FAEF', '#FAF35F')
+                     ,fill=c('deepskyblue', 'red')
                      ,lty = "blank"
                      ,category = c("Income", "Health")
                      ,cat.cex = 2
@@ -167,7 +166,7 @@ getTabla <-function(incomeX, health)
   income=traductorIncome(incomeX)
   
   lista = list(Income = datos3$Country[datos1$Income.Classification==income],Health = datos3$Country[datos3$heal==health], 
-               Intersection=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
+               Merged=datos3$Country[datos3$heal==health & datos3$Income.Classification==income])
   max_length <- max(unlist(lapply (lista, FUN = length)))
   mat <- sapply (lista, function (x) {length (x) <- max_length; return (x)})
   mat =as.matrix(mat)

@@ -10,7 +10,6 @@ library(sf)
 library(tmap)  
 library(XML)
 library(scatterD3)
-library(taucharts)
 library(maps)
 library(leaflet)
 
