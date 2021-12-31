@@ -86,7 +86,7 @@ ui <- fluidPage(
 
 
                           tabsetPanel(
-                            tabPanel("Global Correlations", chorddiag::chorddiagOutput('plotChord', height = '500')),
+                            tabPanel("Global Correlations",  ggiraph::girafeOutput('plotHeat'),plotOutput('plotScatter')),
                             tabPanel("U5 population vs others Plot", ggiraph::girafeOutput('corrplot')),
                             tabPanel("Correlation HeatMap", plotOutput("colorcorr")),
 

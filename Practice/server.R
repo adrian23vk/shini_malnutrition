@@ -49,10 +49,11 @@ server <- function(input, output,session) {
     
     y = input$Y
     traducido = traductorIncome(y)
-    my_data = trainingData[trainingData$Income.classification == traducido]
+    t=trainingData
+    my_data = trainingData[trainingData$Income.Classification == traducido,]
     lab <- my_data[,c('U5.Population.1000')]
-    my_data$Income.classification<-NULL
-    
+    my_data= my_data[, c('Severe.Wasting', 'Wasting', 'Stunting')]
+
     fit <- lm(lab ~ ., data=my_data)
   })
   
@@ -240,13 +241,21 @@ server <- function(input, output,session) {
   
  
   observe({
-    output$plotChord <- chorddiag::renderChorddiag({
+    output$plotHeat <- renderGirafe({
 
        matriz<-cor(g)
-       matrizAbs<-abs(matriz)
+       matrizAbs<-matriz
        matrizAbs[matrizAbs<as.numeric(minCorr())]=0
-       dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
-       chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
+       matrizAbs= melt(matrizAbs)
+      # dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
+       #chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
+       #chordDiagramFromMatrix(matrizAbs)
+   
+       #plot_ly(z= matrizAbs, type = "heatmap") 
+      codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
+         geom_tile()+ylab("")+xlab("")
+       girafe(ggobj=codeGGplot)
+       
 
     })
 
