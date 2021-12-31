@@ -22,6 +22,7 @@ library(plotly)
 library(mlbench)
 library(caret)
 library(dotwhisker)
+library(rgeos)
 
 # Define server logic required to draw a histogram
 server <- function(input, output,session) {

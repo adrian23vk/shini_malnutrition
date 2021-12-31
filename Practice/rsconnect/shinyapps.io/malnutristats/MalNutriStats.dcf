@@ -1,0 +1,13 @@
+name: MalNutriStats
+title: MalNutriStats
+username:
+account: malnutristats
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5382527
+bundleId: 5421572
+url: https://malnutristats.shinyapps.io/MalNutriStats/
+when: 1640926320.29217
+lastSyncTime: 1640926320.29219
+asMultiple: FALSE
+asStatic: FALSE
