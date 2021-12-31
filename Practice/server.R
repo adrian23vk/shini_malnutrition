@@ -9,6 +9,7 @@ library("rnaturalearthdata")
 library(sf)
 library(tmap)  
 library(XML)
+library(reshape)
 
 library(chorddiag)
 
@@ -253,7 +254,7 @@ server <- function(input, output,session) {
    
        #plot_ly(z= matrizAbs, type = "heatmap") 
       codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
-         geom_tile()+ylab("")+xlab("")
+         geom_tile()+ylab("")+xlab("")+geom_point_interactive(aes( tooltip='HOLA'))
        girafe(ggobj=codeGGplot)
        
 
