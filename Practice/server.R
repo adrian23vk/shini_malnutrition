@@ -237,15 +237,15 @@ server <- function(input, output,session) {
     }
 
   })
-
-  })
   
+
+
+})
+
  
   observe({
     output$plotHeat <- renderGirafe({
-
-       matriz<-cor(g)
-       matrizAbs<-matriz
+      matrizAbs<-cor(g)
        matrizAbs[matrizAbs<as.numeric(minCorr())]=0
        matrizAbs= melt(matrizAbs)
       # dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
@@ -253,14 +253,23 @@ server <- function(input, output,session) {
        #chordDiagramFromMatrix(matrizAbs)
    
        #plot_ly(z= matrizAbs, type = "heatmap") 
+       matrizAbs$Cols=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
       codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
-         ylab("")+xlab("")+geom_tile_interactive(aes( tooltip='HOLA'))
+         ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick='')
        girafe(ggobj=codeGGplot)
        
 
     })
+    observeEvent(input$button_click2, {
+      
+      
+
+      
+    })
 
   })
+  
+  
   
   observe({
     output$corrplot <-renderGirafe({
