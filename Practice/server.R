@@ -258,7 +258,6 @@ server <- function(input, output,session) {
        codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
          ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick=matrizAbs$func)
        girafe(ggobj=codeGGplot)
-       
 
     })
 
