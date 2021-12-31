@@ -254,18 +254,14 @@ server <- function(input, output,session) {
    
        #plot_ly(z= matrizAbs, type = "heatmap") 
        matrizAbs$Cols=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
-      codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
-         ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick='')
+       matrizAbs$func=paste0(updateTabsetPanel(session, 'tabCorr',selected = 'U5 population vs others Plot'))
+       codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
+         ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick=matrizAbs$func)
        girafe(ggobj=codeGGplot)
        
 
     })
-    observeEvent(input$button_click2, {
-      
-      
 
-      
-    })
 
   })
   
