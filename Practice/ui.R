@@ -122,14 +122,14 @@ ui <- fluidPage(
                       sidebarLayout(
                         sidebarPanel(
 
-                          selectInput("Y", "Type of Malnutrition",
-                                      choices = yCols
+                          selectInput("Y", "Type of Income",
+                                      choices = incomes
                           ),
                         ),
 
                         mainPanel(
                           tabsetPanel(
-                            tabPanel("Summary", verbatimTextOutput("summary")),
+                            tabPanel("Predictions", ggiraph::girafeOutput('predictions')),
                             tabPanel("Residual vs Fitted Plot", plotOutput("lrPlot")),
                             tabPanel("Q-Q Plot", plotOutput("qqPlot")),
                             tabPanel("Density Plot", plotOutput("densityPlot")),

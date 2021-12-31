@@ -114,13 +114,19 @@ allData <- read.csv(file="malnutrition-estimates.csv")
 allData[["Country_encoded"]] <- encode_ordinal(allData[["Country"]])
 allData[["Year_encoded"]] <- encode_ordinal(allData[["Year"]])
 allData[is.na(allData)] <- 0
-trainingData <- allData[, c(6,7,8,9,10,20,21,22)]
-trainingData[] <- lapply(trainingData, function(x) {
-  if(is.factor(x)) as.numeric(as.character(x)) else x
-})
-sapply(trainingData, class)
-trainingData$Survey.Sample..N. <- as.numeric(gsub(",","",trainingData$Survey.Sample..N.))
-trainingData[is.na(trainingData)] <- 0
+trainingData <- allData[, c(11,12,13,14,15,20,6)]
+trainingData$Severe.Wasting[is.na(trainingData$Severe.Wasting)]<-mean(trainingData$Severe.Wasting,na.rm = TRUE)
+trainingData$Wasting[is.na(trainingData$Wasting)]<-mean(trainingData$Wasting, na.rm = TRUE)
+trainingData$Overweight[is.na(trainingData$Overweight)]<-mean(trainingData$Overweight, na.rm = TRUE)
+trainingData$Stunting[is.na(trainingData$Stunting)]<-mean(trainingData$Stunting, na.rm = TRUE)
+trainingData$Underweight[is.na(trainingData$Underweight)]<-mean(trainingData$Underweight, na.rm = TRUE)
+trainingData$U5.Population.1000[is.na(trainingData$U5.Population.1000)]<-mean(trainingData$U5.Population.1000, na.rm = TRUE)
+# trainingData[] <- lapply(trainingData, function(x) {
+#   if(is.factor(x)) as.numeric(as.character(x)) else x
+# })
+# sapply(trainingData, class)
+# trainingData$Survey.Sample..N. <- as.numeric(gsub(",","",trainingData$Survey.Sample..N.))
+#trainingData[is.na(trainingData)] <- 0
 allCols <- colnames(allData)
 yCols <- allCols[11:15]
 

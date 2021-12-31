@@ -15,7 +15,7 @@ library(chorddiag)
 library(maps)
 library(leaflet)
 library(ggiraph)
-
+library(ggiraphExtra)
 library(GGally)
 library(corrgram)
 library(plotly)
@@ -46,9 +46,14 @@ server <- function(input, output,session) {
   })
   
   model <- reactive({
+    
     y = input$Y
-    lab <- allData[,c(y)]
-    fit <- lm(lab ~ ., data=trainingData)
+    traducido = traductorIncome(y)
+    my_data = trainingData[trainingData$Income.classification == traducido]
+    lab <- my_data[,c('U5.Population.1000')]
+    my_data$Income.classification<-NULL
+    
+    fit <- lm(lab ~ ., data=my_data)
   })
   
   
@@ -269,9 +274,7 @@ server <- function(input, output,session) {
                                             offx = 20, offy = -10,
                                             use_fill = TRUE, use_stroke = TRUE, 
                                             delay_mouseout = 1000) )
-      # as_tauchart(gg)
-     
-     # ggpairs(df)
+
     })
 
     output$colorcorr <- renderPlot({
@@ -285,8 +288,8 @@ server <- function(input, output,session) {
   
   #Regression Plot
   observe({
-    output$summary <- renderPrint({
-      summary(model())
+    output$predictions <- renderGirafe({
+      ggPredict(model(),interactive = TRUE)
       
     })
     output$lrPlot <- renderPlot({
