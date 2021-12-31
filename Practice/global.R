@@ -178,7 +178,7 @@ getVenn <- function(incomeX, health)
   draw.pairwise.venn(area1 = counter[1],                        # Create pairwise venn diagram
                      area2 = counter[2],
                      cross.area = counter[3]
-                     ,fill=c('deepskyblue', 'red')
+                     ,fill=c('#7FFAEF', '#FAF361')
                      ,lty = "blank"
                      ,category = c("Income", "Health")
                      ,cat.cex = 2
