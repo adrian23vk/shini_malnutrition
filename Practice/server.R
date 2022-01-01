@@ -58,6 +58,31 @@ server <- function(input, output,session) {
     fit <- lm(lab ~ ., data=my_data)
   })
   
+  modelHeatMap <- reactive({
+    
+    x='valor1'
+    y='valor2'
+    t=trainingData
+    my_data = trainingData
+    my_data= my_data[, c(x, y)]
+    
+    model <- lm(x~y, data=my_data)
+    
+    x_range <- seq(min(x), max(x), length.out = 100)
+    x_range <- matrix(x_range, nrow=100, ncol=1)
+    xdf <- data.frame(x_range)
+    colnames(xdf) <- c('NombreColumnaX')
+    
+    ydf <- model %>% predict(xdf) 
+    
+    colnames(ydf) <- c('NombreColumnaY')
+    xy <- data.frame(xdf, ydf) 
+    
+    fig <- plot_ly(my_data, x = ~x, y = ~y, type = 'scatter', alpha = 0.65, mode = 'markers')
+    fig <- fig %>% add_trace(data = xy, x = ~NombreColumnaX, y = ~NombreColumnaY, name = 'Regression Fit', mode = 'lines', alpha = 1)
+    fig
+  })
+  
   
   health <-reactive({
     
@@ -254,7 +279,7 @@ server <- function(input, output,session) {
    
        #plot_ly(z= matrizAbs, type = "heatmap") 
        matrizAbs$Cols=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
-       matrizAbs$func=paste0(updateTabsetPanel(session, 'tabCorr',selected = 'U5 population vs others Plot'))
+       matrizAbs$func=as.character(updateTabsetPanel(session, 'tabCorr',selected = 'U5 population vs others Plot'))
        codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
          ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick=matrizAbs$func)
        girafe(ggobj=codeGGplot)
@@ -288,6 +313,9 @@ server <- function(input, output,session) {
                                             offx = 20, offy = -10,
                                             use_fill = TRUE, use_stroke = TRUE, 
                                             delay_mouseout = 1000) )
+
+    })
+    output$lmPlot <- renderPlot({
 
     })
 

@@ -86,7 +86,9 @@ ui <- fluidPage(
 
 
                           tabsetPanel(
-                            tabPanel("Global Correlations",  ggiraph::girafeOutput('plotHeat', click = "plot_click")),
+                            tabPanel("Global Correlations",  ggiraph::girafeOutput('plotHeat')),
+                            tabPanel("Correlation LM", plotOutput("lmPlot")),
+                    
                             tabPanel("U5 population vs others Plot", ggiraph::girafeOutput('corrplot')),
                             tabPanel("Correlation HeatMap", plotOutput("colorcorr")),
 
