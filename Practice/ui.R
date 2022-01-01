@@ -73,10 +73,7 @@ ui <- fluidPage(
                           selectInput("variable2", "Variable 2",
                                       choices = reqCols1
                           ), 
-                          
-                          selectInput("variable3", "Variable 3",
-                                      choices = reqCols1
-                          ),
+
                           
                          sliderInput("levelCorr", "Minimum correlation value", min = 0, max = 1, value = 0, animate =
                                        animationOptions(interval = 100, loop = FALSE, playButton = NULL, pauseButton = NULL))
@@ -87,7 +84,7 @@ ui <- fluidPage(
 
                           tabsetPanel(
                             tabPanel("Global Correlations",  ggiraph::girafeOutput('plotHeat')),
-                            tabPanel("Correlation LM", plotOutput("lmPlot")),
+                            tabPanel("Correlation LM", girafeOutput("lmPlot")),
                     
 
                             tabPanel("U5 population vs others Plot", ggiraph::girafeOutput('corrplot')),

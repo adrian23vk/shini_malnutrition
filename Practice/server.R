@@ -58,30 +58,6 @@ server <- function(input, output,session) {
     fit <- lm(lab ~ ., data=my_data)
   })
   
-  modelHeatMap <- reactive({
-    
-    x='valor1'
-    y='valor2'
-    t=trainingData
-    my_data = trainingData
-    my_data= my_data[, c(x, y)]
-    
-    model <- lm(x~y, data=my_data)
-    
-    x_range <- seq(min(x), max(x), length.out = 100)
-    x_range <- matrix(x_range, nrow=100, ncol=1)
-    xdf <- data.frame(x_range)
-    colnames(xdf) <- c('NombreColumnaX')
-    
-    ydf <- model %>% predict(xdf) 
-    
-    colnames(ydf) <- c('NombreColumnaY')
-    xy <- data.frame(xdf, ydf) 
-    
-    fig <- plot_ly(my_data, x = ~x, y = ~y, type = 'scatter', alpha = 0.65, mode = 'markers')
-    fig <- fig %>% add_trace(data = xy, x = ~NombreColumnaX, y = ~NombreColumnaY, name = 'Regression Fit', mode = 'lines', alpha = 1)
-    fig
-  })
   
   
   health <-reactive({
@@ -105,9 +81,7 @@ server <- function(input, output,session) {
     input$variable2
   })
   
-  var3 <- reactive({
-    input$variable3
-  })
+
 
   observeEvent(input$Compare, {
     
@@ -278,17 +252,24 @@ server <- function(input, output,session) {
    
        #plot_ly(z= matrizAbs, type = "heatmap") 
        matrizAbs$Cols=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
+       idCol=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
        codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
-         ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick='Shiny.setInputValue(\"button_click2\", this.id, {priority: \"event\"})')
-       girafe(ggobj=codeGGplot)
+         ylab("")+xlab("")+geom_tile_interactive(data_id=idCol,aes( tooltip=value )) +
+         labs(fill = "Correlation")
+       girafe(ggobj=codeGGplot, 
+              options = list(opts_selection(type = "single", only_shiny = FALSE)))
 
     })
     
-    observeEvent(input$button_click2, {
+    observeEvent(input$plotHeat_selected, {
       
+      id= input$plotHeat_selected
+      types=as.data.frame(str_split(id,'#'))
 
-      updateTabsetPanel(session, "tabCorr",selected = "Correlation HeatMap")
-      
+      updateSelectInput(session, "variable1", selected =types[1,] )
+      updateSelectInput(session, "variable2", selected =types[2,])
+      updateTabsetPanel(session, "tabCorr",selected = "Correlation LM")
+
       
     })
 
@@ -321,8 +302,9 @@ server <- function(input, output,session) {
                                             delay_mouseout = 1000) )
 
     })
-    output$lmPlot <- renderPlot({
-
+    output$lmPlot <- renderGirafe({
+      plot=modelHeatMap()
+      plot
     })
 
     output$colorcorr <- renderPlot({
@@ -381,6 +363,32 @@ server <- function(input, output,session) {
     
     
   })
+
+  modelHeatMap <- function(){
+    
+    x=var1()
+    y=var2()
+    yy=y
+    
+    if (x==y){
+      y=paste0(y,'.1')
+      
+    }
+    
+    t=trainingData
+    my_data = trainingData
+    my_data= my_data[, c(x, yy)]
+    dataX=my_data[, c(x)]
+    dataY=my_data[, c(y)]
+    names(dataX) <- c(var1())
+    names(dataY) <- c(y)
+    g=colnames(my_data)
+    
+    model <- lm(dataX~dataY, data=my_data)
+    plot=ggPredict(model,se=TRUE,interactive=TRUE)
+    
+  }
+  
   
   
   
