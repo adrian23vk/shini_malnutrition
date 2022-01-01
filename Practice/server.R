@@ -83,8 +83,7 @@ server <- function(input, output,session) {
   var3 <- reactive({
     input$variable3
   })
-  
-  
+
   observeEvent(input$Compare, {
     
     if(input$Compare %% 2 == 1){
@@ -254,11 +253,19 @@ server <- function(input, output,session) {
    
        #plot_ly(z= matrizAbs, type = "heatmap") 
        matrizAbs$Cols=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
-       matrizAbs$func=paste0(updateTabsetPanel(session, 'tabCorr',selected = 'U5 population vs others Plot'))
+       
        codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
-         ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick=matrizAbs$func)
+         ylab("")+xlab("")+geom_tile_interactive(aes( tooltip=value),onclick='Shiny.setInputValue(\"button_click2\", this.id, {priority: \"event\"})')
        girafe(ggobj=codeGGplot)
 
+    })
+    
+    observeEvent(input$button_click2, {
+      
+
+      updateTabsetPanel(session, "tabCorr",selected = "Correlation HeatMap")
+      
+      
     })
 
 
