@@ -81,7 +81,17 @@ server <- function(input, output,session) {
     input$variable2
   })
   
-
+  var1_2 <- reactive({
+    input$variable1
+  })
+  
+  var2_2 <- reactive({
+    input$variable2
+  })
+  var3_2 <- reactive({
+    input$variable3
+  })
+  
 
   observeEvent(input$Compare, {
     
@@ -103,12 +113,20 @@ server <- function(input, output,session) {
       shinyjs::hide(id = "variable2")
       shinyjs::hide(id = "variable3")
 
-      
-    }else{
+    }else if(input$tabCorr == "Correlation LM"){
       shinyjs::hide(id = "levelCorr")
+
+      shinyjs::show(id = "variable1")
+      shinyjs::show(id = "variable2")
+      shinyjs::hide(id = "variable3")
+
+    }else if(input$tabCorr == "U5 population vs Correlation LM"){
+      shinyjs::hide(id = "levelCorr")
+
       shinyjs::show(id = "variable1")
       shinyjs::show(id = "variable2")
       shinyjs::show(id = "variable3")
+
     }
     
     
@@ -246,11 +264,7 @@ server <- function(input, output,session) {
       matrizAbs<-cor(g)
        matrizAbs[matrizAbs<as.numeric(minCorr())]=0
        matrizAbs= melt(matrizAbs)
-      # dimnames(matrizAbs)<-list(cor1= c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"), cor2=c("Severe.Wasting", "Wasting", "Overweight", "Stunting", "Underweight"))
-       #chorddiag::chorddiag(data= matrizAbs,groupnameFontsize = 14)
-       #chordDiagramFromMatrix(matrizAbs)
-   
-       #plot_ly(z= matrizAbs, type = "heatmap") 
+
        matrizAbs$Cols=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
        idCol=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
        codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
@@ -282,14 +296,15 @@ server <- function(input, output,session) {
     output$corrplot <-renderGirafe({
       target1 = DataCopied2[,'U5.Population.1000']
       countrydf1 = DataCopied2[,'Country']
-      df1 <- selectedCols1[, c(var1(), var2(), var3())]
+      df1 <- selectedCols1[, c(var1_2(), var2_2(), var3_2())]
       df1$U5.Population.1000 <- target1
       df1$Country <- countrydf1
 
        gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
-         geom_point_interactive(alpha=0.7)+ labs(colour = var3(), x = var1(), y = 'U5.Population.1000', size = var2()) +
-        scale_size(range = c(3, 12)) + geom_point_interactive(aes(tooltip = Country)) + 
-         scale_colour_gradient(low = "springgreen", high = "royalblue") 
+         geom_point_interactive(alpha=0.7)+ labs(colour = var3_2(), x = var1_2(), y = 'U5.Population.1000', size = var2_2() ) +
+        scale_size(range = c(3, 12)) + geom_point_interactive(aes(tooltip = Country)) +
+         scale_colour_gradient(low = "springgreen", high = "royalblue") +
+         geom_point(shape = 1,colour = "black")
        
       giraf = girafe(ggobj  = gg,  width_svg = 12, height_svg = 6)%>% 
         girafe_options(opts_hover(css = "fill:cyan;"))
