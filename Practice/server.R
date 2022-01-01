@@ -269,7 +269,7 @@ server <- function(input, output,session) {
        idCol=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
        codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
          ylab("")+xlab("")+geom_tile_interactive(data_id=idCol,aes( tooltip=value )) +
-         labs(fill = "Correlation")
+         labs(fill = "Correlation") + scale_fill_gradient(low = "gray88", high = "royalblue")
        girafe(ggobj=codeGGplot, 
               options = list(opts_selection(type = "single", only_shiny = FALSE)))
 
@@ -317,7 +317,7 @@ server <- function(input, output,session) {
                                             delay_mouseout = 1000) )
 
     })
-    output$lmPlot <- renderGirafe({
+    output$lmPlot <- renderPlotly({
       plot=modelHeatMap()
       plot
     })
@@ -399,9 +399,16 @@ server <- function(input, output,session) {
     names(dataY) <- c(y)
     g=colnames(my_data)
     
-    model <- lm(dataX~dataY, data=my_data)
-    plot=ggPredict(model,se=TRUE,interactive=TRUE)
+    #model <- lm(dataX~dataY, data=my_data)
+    #plotGGira=ggPredict(model,se=TRUE,interactive=TRUE, xlab='Hola')
+    #giraf=girafe(print(plotGGira))
+    #giraf
     
+    gpl=  ggplot(my_data,aes(x=dataX,y=dataY)) +
+      geom_point(alpha=0.5,color='lightseagreen') +
+      labs(x= x, y=y)+
+      geom_smooth(method = 'lm')
+    ggplotly(gpl, tooltip = FALSE)
   }
   
   
