@@ -120,29 +120,30 @@ ui <- fluidPage(
                         fluid = TRUE
                         
                       )
-             ),
-             tabPanel("Linear Regression",
-                      sidebarLayout(
-                        sidebarPanel(
-
-                          selectInput("Y", "Type of Income",
-                                      choices = incomes
-                          ),
-                        ),
-
-                        mainPanel(
-                          tabsetPanel(
-                            tabPanel("Predictions", ggiraph::girafeOutput('predictions')),
-                            tabPanel("Residual vs Fitted Plot", plotOutput("lrPlot")),
-                            tabPanel("Q-Q Plot", plotOutput("qqPlot")),
-                            tabPanel("Density Plot", plotOutput("densityPlot")),
-                            tabPanel("Coefficient Plot", plotOutput("coffPlot"))
-                          )
-                          
-                        ),
-                        fluid = TRUE) 
-                      
              )
+             # ,
+             # tabPanel("Linear Regression",
+             #          sidebarLayout(
+             #            sidebarPanel(
+             # 
+             #              selectInput("Y", "Type of Income",
+             #                          choices = incomes
+             #              ),
+             #            ),
+             # 
+             #            mainPanel(
+             #              tabsetPanel(
+             #                tabPanel("Predictions", ggiraph::girafeOutput('predictions')),
+             #                tabPanel("Residual vs Fitted Plot", plotOutput("lrPlot")),
+             #                tabPanel("Q-Q Plot", plotOutput("qqPlot")),
+             #                tabPanel("Density Plot", plotOutput("densityPlot")),
+             #                tabPanel("Coefficient Plot", plotOutput("coffPlot"))
+             #              )
+             #              
+             #            ),
+             #            fluid = TRUE) 
+             #          
+             # )
              
              
              
