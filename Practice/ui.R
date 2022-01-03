@@ -4,7 +4,7 @@ ui <- fluidPage(
   
   useShinyjs(),
   # Application title
-  titlePanel("Malnutrition summary"),
+  titlePanel("MalNutriStats"),
   navbarPage("Menu", id = "panels",
             
              tabPanel("Geographical distribution of malnutrition",
