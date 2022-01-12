@@ -282,8 +282,7 @@ server <- function(input, output,session) {
        gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
          geom_point_interactive(alpha=0.7)+ labs(colour = var3_2(), x = var1_2(), y = 'U5.Population.1000', size = var2_2() ) +
         scale_size(range = c(3, 12)) + geom_point_interactive(aes(tooltip = Country)) +
-         scale_colour_gradient(low = "springgreen", high = "royalblue") +
-         geom_point(shape = 1,colour = "black")
+         scale_colour_gradient(low = "springgreen", high = "royalblue") 
        
       giraf = girafe(ggobj  = gg,  width_svg = 12, height_svg = 6)%>% 
         girafe_options(opts_hover(css = "fill:cyan;"))
@@ -301,12 +300,7 @@ server <- function(input, output,session) {
       plot
     })
 
-    output$colorcorr <- renderPlot({
-      target2 = DataCopied3[,'U5.Population.1000']
-      df2 <- selectedCols2[, c(var1(), var2(), var3())]
-      df2$U5.Population.1000 <- target2
-      ggcorr(df2, low = "#3B9AB2", mid = "lightgrey", high = "#F21A00", nbreaks = 15)
-    })
+
 
   })
   
