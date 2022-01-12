@@ -7,7 +7,7 @@ library(leaflet)
 library(plotly)
 library(ggiraph)
 library(ggiraphExtra)
-devtools::install_github("ropenscilabs/rnaturalearth")
+#devtools::install_github("ropenscilabs/rnaturalearth")
 library(rnaturalearth)
 library(sf)
 library(reshape2)
@@ -29,7 +29,7 @@ datos1 = datos1 %>%
 
 datos3 = data2
 # parte 1
-data1[is.na(data1)] = 0
+#data1[is.na(data1)] = 0
 listCountry <-data2["Country"]
 cols <- colnames(data2)
 listTypeMal<-cols[3:7] 
@@ -79,13 +79,7 @@ datos1 <- datos1[!(datos1$admin =="Tuvalu"),]
 #PLOT 3
 #plot corr
 
-g<-data2[,c(3,4,5,6,7)]
 
-g$Severe.Wasting[is.na(g$Severe.Wasting)]<-mean(g$Severe.Wasting,na.rm = TRUE)
-g$Wasting[is.na(g$Wasting)]<-mean(g$Wasting, na.rm = TRUE)
-g$Overweight[is.na(g$Overweight)]<-mean(g$Overweight, na.rm = TRUE)
-g$Stunting[is.na(g$Stunting)]<-mean(g$Stunting, na.rm = TRUE)
-g$Underweight[is.na(g$Underweight)]<-mean(g$Underweight, na.rm = TRUE)
 
 DataCopied2 <- data2
 selectedCols1 <- DataCopied2[,c(3,4,5,6,7)] 

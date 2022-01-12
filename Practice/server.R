@@ -109,14 +109,15 @@ server <- function(input, output,session) {
   #1º
   observe({
     
-  output$plot <- renderPlot({
+  output$plot <- renderPlotly({
     dataCountryMalnut=getCountryTimeLine( country(),malnut())
-    xx    <- dataCountryMalnut[,1]
-    yy <- dataCountryMalnut[,2]
+    dataCountryMalnut=na.omit(dataCountryMalnut)
+    Year    <- dataCountryMalnut[,1]
+    Value <- dataCountryMalnut[,2]
     if (compare()){
       dataCountryMalnut2=getCountryTimeLine( country2(),malnut())
-      xx    <- dataCountryMalnut2[,1]
-      yy <- dataCountryMalnut2[,2]
+      Year    <- dataCountryMalnut2[,1]
+      Value <- dataCountryMalnut2[,2]
     }
 
     
@@ -131,27 +132,28 @@ server <- function(input, output,session) {
         dataCountryMalnut$Country = country()
         dataCountryMalnut2$Country = country2()
         dataPlot = merge(dataCountryMalnut,dataCountryMalnut2, no.dups = FALSE,all = TRUE )
-        yyy =dataPlot[,2]
-        country1Plot <-ggplot(dataPlot, aes(x=Year, y=yyy)) +
+        Value =dataPlot[,2]
+        country1Plot <-ggplot(dataPlot, aes(x=Year, y=Value)) +
           geom_line(aes(colour=Country)) +
           xlab('Year')+
           ylab(malnut()) +
           geom_point(aes( color=Country),size =6)+
-          #theme_minimal(base_size = 20) +
           theme(legend.position = "bottom" , legend.key = element_blank() )
-        country1Plot
+        plotCountries= ggplotly(country1Plot)
+        plotCountries
         
     }
     else{
       dataCountryMalnut$Country = country()
       
-      ggplot(dataCountryMalnut, aes(x=xx, y=yy)) +
+      plotCrountry2=ggplot(dataCountryMalnut, aes(x=Year, y=Value)) +
         geom_line(aes(colour=Country)) +
         xlab('Year')+
         ylab(malnut()) +
         geom_point(aes( color=Country),size=6)+
-        # theme_minimal(base_size = 20) +
         theme(legend.position = "bottom", legend.key = element_blank()  )
+     plotCountries= ggplotly(plotCrountry2)
+     plotCountries
     }
     })
   })
