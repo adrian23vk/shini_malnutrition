@@ -57,7 +57,7 @@ ui <- fluidPage(
                           
                         ),
                         mainPanel(
-                          plotOutput("plot",height = 500)
+                          plotlyOutput("plot",height = 500)
                         ),
                       fluid = TRUE) 
                       
