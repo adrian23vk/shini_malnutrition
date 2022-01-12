@@ -20,6 +20,9 @@ server <- function(input, output,session) {
   compare<-reactive({
     input$Compare
   })
+  compare2<-reactive({
+    input$Compare2
+  })
   
   model <- reactive({
     
@@ -80,6 +83,18 @@ server <- function(input, output,session) {
   })
   
   
+  observeEvent(input$Compare2, {
+    
+    if(input$Compare2 %% 2 == 1){
+      shinyjs::show(id = "variable3")
+    }else{
+      shinyjs::hide(id = "variable3")
+    }
+    
+    
+  })
+  
+  
   observeEvent(input$tabCorr, {
     
     if(input$tabCorr == "Global Correlations"){
@@ -87,6 +102,7 @@ server <- function(input, output,session) {
       shinyjs::hide(id = "variable1")
       shinyjs::hide(id = "variable2")
       shinyjs::hide(id = "variable3")
+      shinyjs::hide(id = "Compare2")
 
     }else if(input$tabCorr == "Correlation LM"){
       shinyjs::hide(id = "levelCorr")
@@ -94,13 +110,15 @@ server <- function(input, output,session) {
       shinyjs::show(id = "variable1")
       shinyjs::show(id = "variable2")
       shinyjs::hide(id = "variable3")
+      shinyjs::hide(id = "Compare2")
 
     }else if(input$tabCorr == "U5 population vs Correlation LM"){
       shinyjs::hide(id = "levelCorr")
 
       shinyjs::show(id = "variable1")
       shinyjs::show(id = "variable2")
-      shinyjs::show(id = "variable3")
+      shinyjs::hide(id = "variable3")
+      shinyjs::show(id = "Compare2")
 
     }
     
@@ -279,15 +297,21 @@ server <- function(input, output,session) {
       df1 <- selectedCols1[, c(var1_2(), var2_2(), var3_2())]
       df1$U5.Population.1000 <- target1
       df1$Country <- countrydf1
-
-       gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
-         geom_point_interactive(alpha=0.7)+ labs(colour = var3_2(), x = var1_2(), y = 'U5.Population.1000', size = var2_2() ) +
-        scale_size(range = c(1, 10)) + geom_point_interactive(aes(tooltip = Country)) +
-         scale_color_gradient(low = 'turquoise', high = 'turquoise4')
+      df1$Country <- str_remove_all(df1$Country,"'")
+      if(compare2()){
+        gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
+          geom_point_interactive(alpha=0.7, aes( tooltip = Country, data_id = Country))+ labs(colour = var3_2(), x = var1_2(), y = 'U5.Population.1000', size = var2_2() ) +
+          scale_size(range = c(1, 10)) +
+          scale_color_gradient(low = 'turquoise', high = 'turquoise4')
+      }else{
+        gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4] , color = df1[,2])) +
+          geom_point_interactive(alpha=0.7, size = 5,  aes( tooltip = Country, data_id = Country))+ labs(colour = var2_2(), x = var1_2(), y = 'U5.Population.1000') +
+          scale_color_gradient(low = 'turquoise', high = 'turquoise4')
+      }
+       
         
        
-      giraf = girafe(ggobj  = gg,  width_svg = 12, height_svg = 6)%>% 
-        girafe_options(opts_hover(css = "fill:cyan;"))
+      giraf = girafe(ggobj  = gg,  width_svg = 12, height_svg = 6)
       giraf <- girafe_options(giraf,
                               opts_zoom(max = 20) )
       giraf <- girafe_options(giraf,
