@@ -236,7 +236,8 @@ server <- function(input, output,session) {
  
   observe({
     output$plotHeat <- renderGirafe({
-      matrizAbs<-cor(g)
+      dataCorr=trainingData[,c(1,2,3,4,5)]
+      matrizAbs<-cor(dataCorr)
       rangeOfCorr=minCorr()
       val1=rangeOfCorr[1]
       val2=rangeOfCorr[2] 
@@ -386,7 +387,7 @@ server <- function(input, output,session) {
     gpl=  ggplot(my_data,aes(x=dataX,y=dataY)) +
       geom_point(alpha=0.5,color='lightseagreen') +
       labs(x= x, y=y)+
-      geom_smooth(method = 'lm')
+      geom_smooth(method = 'glm')
     ggplotly(gpl, tooltip = FALSE)
   }
   
