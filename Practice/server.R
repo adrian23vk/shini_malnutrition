@@ -1,29 +1,4 @@
 
-library(shiny)
-library(ggplot2)
-library(hrbrthemes)
-library(gridExtra)
-library(scales)
-library("rnaturalearth")
-library("rnaturalearthdata")
-library(sf)
-library(tmap)  
-library(XML)
-library(reshape)
-
-library(chorddiag)
-
-library(maps)
-library(leaflet)
-library(ggiraph)
-library(ggiraphExtra)
-library(GGally)
-library(corrgram)
-library(plotly)
-library(mlbench)
-library(caret)
-library(dotwhisker)
-library(rgeos)
 
 # Define server logic required to draw a histogram
 server <- function(input, output,session) {
@@ -262,14 +237,18 @@ server <- function(input, output,session) {
   observe({
     output$plotHeat <- renderGirafe({
       matrizAbs<-cor(g)
-       matrizAbs[matrizAbs<as.numeric(minCorr())]=0
+      rangeOfCorr=minCorr()
+      val1=rangeOfCorr[1]
+      val2=rangeOfCorr[2] 
+      matrizAbs[matrizAbs<as.numeric(val1)]=0
+      matrizAbs[ matrizAbs>as.numeric(val2)]=0
        matrizAbs= melt(matrizAbs)
-
-       matrizAbs$Cols=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
-       idCol=paste0(matrizAbs$X1,'#',matrizAbs$X2 )
-       codeGGplot= ggplot(data = matrizAbs, aes(x=X1, y=X2, fill=value)) + 
+      colnames(matrizAbs)<-c('Var1','Var2','value')
+       matrizAbs$Cols=paste0(matrizAbs$Var1,'#',matrizAbs$Var2 )
+       idCol=paste0(matrizAbs$Var1,'#',matrizAbs$Var2 )
+       codeGGplot= ggplot(data = matrizAbs, aes(x=Var1, y=Var2, fill=value)) + 
          ylab("")+xlab("")+geom_tile_interactive(data_id=idCol,aes( tooltip=value )) +
-         labs(fill = "Correlation") + scale_fill_gradient(low = "gray88", high = "royalblue")
+         labs(fill = "Correlation") + scale_fill_gradient2(low = 'red',mid = "gray88", high = "royalblue",guide = 'colourbar',midpoint = 0,limits=c(-1,1))
        girafe(ggobj=codeGGplot, 
               options = list(opts_selection(type = "single", only_shiny = FALSE)))
 

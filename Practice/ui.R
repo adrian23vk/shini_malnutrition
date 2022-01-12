@@ -78,8 +78,7 @@ ui <- fluidPage(
                                       choices = reqCols1
                           ), 
                           
-                         sliderInput("levelCorr", "Minimum correlation value", min = 0, max = 1, value = 0, animate =
-                                       animationOptions(interval = 100, loop = FALSE, playButton = NULL, pauseButton = NULL))
+                         sliderInput("levelCorr", "Minimum correlation value", min = -1, max = 1, value = c(-1,1),step = 0.05)
                           
                         ),
                         mainPanel(
