@@ -73,12 +73,12 @@ ui <- fluidPage(
                           selectInput("variable2", "Variable 2",
                                       choices = reqCols1
                           ), 
-
+                          checkboxInput("Compare2", "Compare 3 variables", FALSE), 
                           selectInput("variable3", "Variable 3",
                                       choices = reqCols1
                           ), 
-                          
-                         sliderInput("levelCorr", "Minimum correlation value", min = -1, max = 1, value = c(-1,1),step = 0.05)
+                         
+                          sliderInput("levelCorr", "Minimum correlation value", min = -1, max = 1, value = c(-1,1),step = 0.05)
                           
                         ),
                         mainPanel(
@@ -120,31 +120,7 @@ ui <- fluidPage(
                         
                       )
              )
-             # ,
-             # tabPanel("Linear Regression",
-             #          sidebarLayout(
-             #            sidebarPanel(
-             # 
-             #              selectInput("Y", "Type of Income",
-             #                          choices = incomes
-             #              ),
-             #            ),
-             # 
-             #            mainPanel(
-             #              tabsetPanel(
-             #                tabPanel("Predictions", ggiraph::girafeOutput('predictions')),
-             #                tabPanel("Residual vs Fitted Plot", plotOutput("lrPlot")),
-             #                tabPanel("Q-Q Plot", plotOutput("qqPlot")),
-             #                tabPanel("Density Plot", plotOutput("densityPlot")),
-             #                tabPanel("Coefficient Plot", plotOutput("coffPlot"))
-             #              )
-             #              
-             #            ),
-             #            fluid = TRUE) 
-             #          
-             # )
-             
-             
+   
              
     )
   
