@@ -111,15 +111,11 @@ ui <- fluidPage(
                           width = 2
                         ),
                         mainPanel(
-                                  fluidRow(
-                                            column(8,plotOutput("venn",height = 450, width = 500)),
-                                            column(4,DT::dataTableOutput('tabla', height = 250, width = 500))
-                                            )
+                          fluidRow(
+                              column(8,plotOutput("venn",height = 450, width = 500)),
+                              column(4,DT::dataTableOutput('tabla', height = 250, width = 500))
+                          )
                                   
- 
-                                     
-                            #tabPanel("Country details",DT::dataTableOutput('tabla'))
-                            
                           ),
                         fluid = TRUE
                         
