@@ -14,6 +14,7 @@ library(reshape2)
 library(VennDiagram)
 library(DT)
 library(stringr)
+library("ggvenn")
 
 
 
@@ -163,7 +164,6 @@ columnKmeans$ord[columnKmeans$ord==4] <- orderedCenters$order[orderedCenters$ind
 datos3$heal = columnKmeans$ord
 
 
-library("ggvenn")
 getVenn <- function(incomeX, health)
 {
   
