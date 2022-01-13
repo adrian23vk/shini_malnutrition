@@ -374,8 +374,17 @@ server <- function(input, output,session) {
         'Health', backgroundColor = '#FAF3B9'
       ) %>% formatStyle(
         'Intersection', backgroundColor = '#C4FAB8'
-      )
+      )%>% formatStyle(
+         'Income', fontSize = '10px'
+       ) %>% formatStyle(
+        'Health', fontSize = '10px'
+       )%>% formatStyle(
+         'Intersection', fontSize = '10px'
+       )
+      
     })
+    
+
 
     
     

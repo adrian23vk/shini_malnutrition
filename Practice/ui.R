@@ -107,15 +107,20 @@ ui <- fluidPage(
                           
                           selectInput("Income", "Income", choices = incomes),
                           
-                          selectInput("Health", "Heath", choices = health)
+                          selectInput("Health", "Heath", choices = health), 
+                          width = 2
                         ),
                         mainPanel(
-                          tabsetPanel(
-                            tabPanel("Venn diagram", plotOutput("venn",height = 550, width = 600)),
-                            tabPanel("Country details",DT::dataTableOutput('tabla'))
+                                  fluidRow(
+                                            column(8,plotOutput("venn",height = 450, width = 500)),
+                                            column(4,DT::dataTableOutput('tabla', height = 250, width = 500))
+                                            )
+                                  
+ 
+                                     
+                            #tabPanel("Country details",DT::dataTableOutput('tabla'))
                             
-                          )
-                        ),
+                          ),
                         fluid = TRUE
                         
                       )
