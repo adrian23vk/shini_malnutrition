@@ -182,7 +182,13 @@ getVenn <- function(incomeX, health)
                      ,fill=c('#7FFAEF', '#FAF361')
                      ,lty = "blank"
                      ,category = c("Income", "Health")
+                     ,cat.cex = 2
                      
+                     
+                     ,cex = 2
+                     
+                     
+                     ,cat.pos = 0
                      
                      ,lwd =0
                      
