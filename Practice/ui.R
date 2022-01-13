@@ -111,7 +111,7 @@ ui <- fluidPage(
                         ),
                         mainPanel(
                           tabsetPanel(
-                            tabPanel("Venn diagram", plotOutput("venn")),
+                            tabPanel("Venn diagram", plotOutput("venn",height = 550, width = 600)),
                             tabPanel("Country details",DT::dataTableOutput('tabla'))
                             
                           )

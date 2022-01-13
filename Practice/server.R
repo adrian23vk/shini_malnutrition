@@ -365,6 +365,7 @@ server <- function(input, output,session) {
       getVenn(income(),health())
       
     })
+    
     output$tabla<- DT::renderDataTable({
       table= getTabla(income(),health())
       DT::datatable(table) %>% formatStyle(
