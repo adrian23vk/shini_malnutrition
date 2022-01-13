@@ -158,7 +158,7 @@ server <- function(input, output,session) {
           geom_point(aes( color=Country),size =6)+
           theme(legend.position = "bottom" , legend.key = element_blank() )
         plotCountries= ggplotly(country1Plot)
-        plotCountries
+        plotCountries %>% layout(legend = list(orientation = 'h'))
         
     }
     else{
@@ -171,7 +171,7 @@ server <- function(input, output,session) {
         geom_point(aes( color=Country),size=6)+
         theme(legend.position = "bottom", legend.key = element_blank()  )
      plotCountries= ggplotly(plotCrountry2)
-     plotCountries
+     plotCountries %>% layout(legend = list(orientation = 'h'))
     }
     })
   })
