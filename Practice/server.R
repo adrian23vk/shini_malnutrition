@@ -326,31 +326,6 @@ server <- function(input, output,session) {
 
   })
   
-  #Regression Plot
-  observe({
-    output$predictions <- renderGirafe({
-      ggPredict(model(),interactive = TRUE)
-      
-    })
-    output$lrPlot <- renderPlot({
-      plot(model(), which=1)
-    })
-    
-    output$qqPlot <- renderPlot({
-      plot(model(), which=2)
-    })
-    
-    output$densityPlot <- renderPlot({
-      res <- resid(model())
-      plot(density(res))
-    })
-    
-    output$coffPlot <- renderPlot({
-      dwplot(model())
-    })
-    
-
-  })
 
   
   #3º
