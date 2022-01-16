@@ -66,8 +66,16 @@ server <- function(input, output,session) {
   var2_2 <- reactive({
     input$variable2
   })
-  var3_2 <- reactive({
-    input$variable3
+
+  
+  var1_3<- reactive({
+    input$variable1_2
+  })
+  var2_3<- reactive({
+    input$variable2_2
+  })
+  var3_3<- reactive({
+    input$variable3_2
   })
   
 
@@ -86,9 +94,9 @@ server <- function(input, output,session) {
   observeEvent(input$Compare2, {
     
     if(input$Compare2 %% 2 == 1){
-      shinyjs::show(id = "variable3")
+      shinyjs::show(id = "variable3_2")
     }else{
-      shinyjs::hide(id = "variable3")
+      shinyjs::hide(id = "variable3_2")
     }
     
     
@@ -101,27 +109,13 @@ server <- function(input, output,session) {
       shinyjs::show(id = "levelCorr")
       shinyjs::hide(id = "variable1")
       shinyjs::hide(id = "variable2")
-      shinyjs::hide(id = "variable3")
-      shinyjs::hide(id = "Compare2")
 
     }else if(input$tabCorr == "Correlation LM"){
       shinyjs::hide(id = "levelCorr")
-
       shinyjs::show(id = "variable1")
       shinyjs::show(id = "variable2")
-      shinyjs::hide(id = "variable3")
-      shinyjs::hide(id = "Compare2")
-
-    }else if(input$tabCorr == "U5 population vs Correlation LM"){
-      shinyjs::hide(id = "levelCorr")
-
-      shinyjs::show(id = "variable1")
-      shinyjs::show(id = "variable2")
-      shinyjs::hide(id = "variable3")
-      shinyjs::show(id = "Compare2")
 
     }
-    
     
   })
   #1º
@@ -296,18 +290,18 @@ server <- function(input, output,session) {
     output$corrplot <-renderGirafe({
       target1 = DataCopied2[,'U5.Population.1000']
       countrydf1 = DataCopied2[,'Country']
-      df1 <- selectedCols1[, c(var1_2(), var2_2(), var3_2())]
+      df1 <- selectedCols1[, c(var1_3(), var2_3(), var3_3())]
       df1$U5.Population.1000 <- target1
       df1$Country <- countrydf1
       df1$Country <- str_remove_all(df1$Country,"'")
       if(compare2()){
         gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
-          geom_point_interactive(alpha=0.7, aes( tooltip = Country, data_id = Country))+ labs(colour = var3_2(), x = var1_2(), y = 'U5.Population.1000', size = var2_2() ) +
+          geom_point_interactive(alpha=0.7, aes( tooltip = Country, data_id = Country))+ labs(colour = var3_3(), x = var1_3(), y = 'U5.Population.1000', size = var2_2() ) +
           scale_size(range = c(1, 10)) +
           scale_color_gradient(low = 'turquoise', high = 'turquoise4')
       }else{
         gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4] , color = df1[,2])) +
-          geom_point_interactive(alpha=0.7, size = 5,  aes( tooltip = Country, data_id = Country))+ labs(colour = var2_2(), x = var1_2(), y = 'U5.Population.1000') +
+          geom_point_interactive(alpha=0.7, size = 5,  aes( tooltip = Country, data_id = Country))+ labs(colour = var2_3(), x = var1_3(), y = 'U5.Population.1000') +
           scale_color_gradient(low = 'turquoise', high = 'turquoise4')
       }
        

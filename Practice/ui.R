@@ -73,10 +73,6 @@ ui <- fluidPage(
                           selectInput("variable2", "Variable 2",
                                       choices = reqCols1
                           ), 
-                          checkboxInput("Compare2", "Compare 3 variables", FALSE), 
-                          selectInput("variable3", "Variable 3",
-                                      choices = reqCols1
-                          ), 
                          
                           sliderInput("levelCorr", "Minimum correlation value", min = -1, max = 1, value = c(-1,1),step = 0.05)
                           
@@ -89,7 +85,7 @@ ui <- fluidPage(
                             tabPanel("Correlation LM", plotlyOutput("lmPlot")),
                     
 
-                            tabPanel("U5 population vs Correlation LM", ggiraph::girafeOutput('corrplot')),
+                    #        tabPanel("U5 population vs Correlation LM", ggiraph::girafeOutput('corrplot')),
                          #   tabPanel("Correlation HeatMap", plotOutput("colorcorr")),
 
                             id ="tabCorr"),
@@ -99,6 +95,26 @@ ui <- fluidPage(
                         fluid = TRUE) 
                       
              ),
+             tabPanel("U5 population vs Correlation LM",
+                      sidebarLayout(
+                        sidebarPanel(
+                          selectInput("variable1_2", "Variable 1",
+                                    choices = reqCols1
+                          ),
+                          selectInput("variable2_2", "Variable 2",
+                                    choices = reqCols1
+                          ), 
+                          checkboxInput("Compare2", "Compare 3 variables", FALSE
+                          ), 
+                          selectInput("variable3_2", "Variable 3",
+                                    choices = reqCols1
+                          )
+                        
+                      ),mainPanel(
+                          ggiraph::girafeOutput('corrplot')
+                      )
+                    ), fluid = TRUE 
+              ),
              
              tabPanel("Wealth related to the malnutrition level",
                       
