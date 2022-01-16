@@ -82,7 +82,7 @@ ui <- fluidPage(
 
                           tabsetPanel(
                             tabPanel("Global Correlations",  ggiraph::girafeOutput('plotHeat')),
-                            tabPanel("Correlation LM", plotlyOutput("lmPlot")),
+                            tabPanel("Linear correlation ", plotlyOutput("lmPlot")),
 
                             id ="tabCorr"),
 
@@ -91,7 +91,7 @@ ui <- fluidPage(
                         fluid = TRUE) 
                       
              ),
-             tabPanel("U5 population vs Correlation LM",
+             tabPanel("Malnutrition vs. death of under-five-year-olds",
                       sidebarLayout(
                         sidebarPanel(
                           selectInput("variable1_2", "Variable 1",
