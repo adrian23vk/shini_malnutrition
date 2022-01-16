@@ -112,7 +112,7 @@ ui <- fluidPage(
                     ), fluid = TRUE 
               ),
              
-             tabPanel("Wealth related to the malnutrition level",
+             tabPanel("Malnutrition level & Wealth",
                       
                       sidebarLayout(
                         sidebarPanel(
