@@ -276,7 +276,7 @@ server <- function(input, output,session) {
 
       updateSelectInput(session, "variable1", selected =types[1,] )
       updateSelectInput(session, "variable2", selected =types[2,])
-      updateTabsetPanel(session, "tabCorr",selected = "Correlation LM")
+      updateTabsetPanel(session, "tabCorr",selected = "Linear Correlation")
 
       
     })
