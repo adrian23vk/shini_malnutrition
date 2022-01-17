@@ -5,9 +5,9 @@ account: malnutristats
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5382527
-bundleId: 5476448
+bundleId: 5478263
 url: https://malnutristats.shinyapps.io/MalNutriStats/
-when: 1642413238.26982
-lastSyncTime: 1642413238.26984
+when: 1642447735.52421
+lastSyncTime: 1642447735.52422
 asMultiple: FALSE
 asStatic: FALSE
