@@ -16,6 +16,7 @@ library(DT)
 library(stringr)
 library("ggvenn")
 library(gridExtra)
+library(rgeos)
 
 
 #1 PLOT
