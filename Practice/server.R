@@ -105,12 +105,12 @@ server <- function(input, output,session) {
   
   observeEvent(input$tabCorr, {
     
-    if(input$tabCorr == "Global Correlations"){
+    if(input$tabCorr == "Global Correlation"){
       shinyjs::show(id = "levelCorr")
       shinyjs::hide(id = "variable1")
       shinyjs::hide(id = "variable2")
 
-    }else if(input$tabCorr == "Correlation LM"){
+    }else if(input$tabCorr == "Linear Correlation"){
       shinyjs::hide(id = "levelCorr")
       shinyjs::show(id = "variable1")
       shinyjs::show(id = "variable2")

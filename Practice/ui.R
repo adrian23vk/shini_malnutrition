@@ -81,8 +81,8 @@ ui <- fluidPage(
 
 
                           tabsetPanel(
-                            tabPanel("Global Correlations",  ggiraph::girafeOutput('plotHeat')),
-                            tabPanel("Linear correlation ", plotlyOutput("lmPlot")),
+                            tabPanel("Global Correlation",  ggiraph::girafeOutput('plotHeat')),
+                            tabPanel("Linear Correlation", plotlyOutput("lmPlot")),
 
                             id ="tabCorr"),
 
