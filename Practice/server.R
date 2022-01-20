@@ -105,12 +105,12 @@ server <- function(input, output,session) {
   
   observeEvent(input$tabCorr, {
     
-    if(input$tabCorr == "Global Correlations"){
+    if(input$tabCorr == "Global Correlation"){
       shinyjs::show(id = "levelCorr")
       shinyjs::hide(id = "variable1")
       shinyjs::hide(id = "variable2")
 
-    }else if(input$tabCorr == "Correlation LM"){
+    }else if(input$tabCorr == "Linear Correlation"){
       shinyjs::hide(id = "levelCorr")
       shinyjs::show(id = "variable1")
       shinyjs::show(id = "variable2")
@@ -278,7 +278,7 @@ server <- function(input, output,session) {
 
       updateSelectInput(session, "variable1", selected =types[1,] )
       updateSelectInput(session, "variable2", selected =types[2,])
-      updateTabsetPanel(session, "tabCorr",selected = "Correlation LM")
+      updateTabsetPanel(session, "tabCorr",selected = "Linear Correlation")
 
       
     })
@@ -297,13 +297,13 @@ server <- function(input, output,session) {
       df1$Country <- countrydf1
       df1$Country <- str_remove_all(df1$Country,"'")
       if(compare2()){
-        gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4], size = df1[,2] , color = df1[,3]))  +
-          geom_point_interactive(alpha=0.7, aes( tooltip = Country, data_id = Country))+ labs(colour = var3_3(), x = var1_3(), y = 'Deaths of children under 5 years of age per 1.000', size = var2_2() ) +
+        gg <- ggplot(df1, aes(x=df1[,4], y = df1[,1], size = df1[,2] , color = df1[,3]))  +
+          geom_point_interactive(alpha=0.7, aes( tooltip = Country, data_id = Country))+ labs(colour = var3_3(), x = 'Deaths of children under 5 years of age per 1.000' , y =var1_3(), size = var2_2() ) +
           scale_size(range = c(1, 10)) +
           scale_color_gradient(low = 'turquoise', high = 'turquoise4')
       }else{
-        gg <- ggplot(df1, aes(x=df1[,1], y = df1[,4] , color = df1[,2])) +
-          geom_point_interactive(alpha=0.7, size = 5,  aes( tooltip = Country, data_id = Country))+ labs(colour = var2_3(), x = var1_3(), y = 'Deaths of children under 5 years of age per 1.000') +
+        gg <- ggplot(df1, aes(x=df1[,4], y = df1[,1] , color = df1[,2])) +
+          geom_point_interactive(alpha=0.7, size = 5,  aes( tooltip = Country, data_id = Country))+ labs(colour = var2_3(),  x = 'Deaths of children under 5 years of age per 1.000' , y =var1_3()) +
           scale_color_gradient(low = 'turquoise', high = 'turquoise4')
       }
        
