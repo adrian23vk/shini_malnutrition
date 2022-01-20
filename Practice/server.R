@@ -130,6 +130,8 @@ server <- function(input, output,session) {
     Value <- dataCountryMalnut[,2]
     if (compare()){
       dataCountryMalnut2=getCountryTimeLine( country2(),malnut())
+      dataCountryMalnut2=na.omit(dataCountryMalnut2)
+      row.names(dataCountryMalnut2) <- NULL
       Year    <- dataCountryMalnut2[,1]
       Value <- dataCountryMalnut2[,2]
     }
