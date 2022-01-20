@@ -147,7 +147,7 @@ server <- function(input, output,session) {
       {
         dataCountryMalnut$Country = country()
         dataCountryMalnut2$Country = country2()
-        dataPlot = merge(dataCountryMalnut,dataCountryMalnut2, no.dups = FALSE,all = TRUE )
+        dataPlot = merge(dataCountryMalnut2,dataCountryMalnut, no.dups = FALSE,all = TRUE )
         Value =dataPlot[,2]
         country1Plot <-ggplot(dataPlot, aes(x=Year, y=Value)) +
           geom_line(aes(colour=Country)) +
