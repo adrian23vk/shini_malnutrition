@@ -37,7 +37,7 @@ ui <- fluidPage(
                       
                       ,fluid = TRUE)
              ,
-             tabPanel("Malnutrition around the world",
+             tabPanel("Temporal evolution of malnutrition",
                       sidebarLayout(
                         sidebarPanel(
                           

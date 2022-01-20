@@ -124,6 +124,8 @@ server <- function(input, output,session) {
   output$plot <- renderPlotly({
     dataCountryMalnut=getCountryTimeLine( country(),malnut())
     dataCountryMalnut=na.omit(dataCountryMalnut)
+    row.names(dataCountryMalnut) <- NULL
+    
     Year    <- dataCountryMalnut[,1]
     Value <- dataCountryMalnut[,2]
     if (compare()){
