@@ -240,7 +240,7 @@ server <- function(input, output,session) {
       updateSelectInput(session, "Country", selected = id)
       updateSelectInput(session, "MalnutritionType", selected = malnut2())
       updateCheckboxInput(session,"Compare", value = FALSE)
-      updateTabsetPanel(session, "panels",selected = "Malnutrition around the world")
+      updateTabsetPanel(session, "panels",selected = "Temporal evolution of malnutrition")
     }
 
   })
