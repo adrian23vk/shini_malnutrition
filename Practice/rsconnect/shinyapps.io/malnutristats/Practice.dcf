@@ -1,0 +1,13 @@
+name: Visualizations
+title: Visualizations
+username:
+account: malnutristats
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5492762
+bundleId: 5499404
+url: https://malnutristats.shinyapps.io/Visualizations/
+when: 1642964713.37802
+lastSyncTime: 1642964713.37803
+asMultiple: FALSE
+asStatic: FALSE
